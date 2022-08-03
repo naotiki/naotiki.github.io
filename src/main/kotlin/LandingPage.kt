@@ -1,12 +1,14 @@
-import csstype.*
+import csstype.AlignItems
+import csstype.TextAlign
+import csstype.px
+import mui.icons.material.GitHub
+import mui.icons.material.Twitter
+import mui.material.*
+import mui.material.styles.TypographyVariant
+import mui.system.responsive
+import mui.system.sx
 import react.FC
 import react.Props
-import emotion.react.css
-import mui.material.Avatar
-import mui.system.sx
-import org.w3c.dom.Image
-import react.dom.html.InputType
-import react.dom.html.ReactHTML.div
 import react.useState
 
 external interface WelcomeProps : Props {
@@ -15,16 +17,44 @@ external interface WelcomeProps : Props {
 
 val LandingPage = FC<WelcomeProps> { props ->
     var name by useState(props.name)
-    div{
-        css{
-            justifyContent= JustifyContent.center
-        }
-        Avatar {
-            src = "naotiki_icon.webp"
-            sx {
 
-                width = 256.px
-                height = 256.px
+    Box {
+
+        Stack {
+            sx {
+                // display= Display.flex
+                //  justifyContent = JustifyContent.center
+                alignItems = AlignItems.center
+            }
+            Avatar {
+                src = "naotiki_icon.webp"
+                sx {
+                    width = 256.px
+                    height = 256.px
+
+                }
+            }
+
+
+            Typography {
+                variant = TypographyVariant.h3
+                sx { textAlign = TextAlign.center }
+                +"Naotiki"
+            }
+            Stack {
+                direction = responsive(StackDirection.row)
+                spacing = responsive(2)
+                Fab {
+                    size = Size.small
+                    color = FabColor.primary
+                    Twitter()
+                }
+                Fab {
+                    size = Size.small
+                    color = FabColor.primary
+                    GitHub()
+                }
+
             }
 
         }
