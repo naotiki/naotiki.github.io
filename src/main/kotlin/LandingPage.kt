@@ -66,14 +66,18 @@ val LandingPage = FC<WelcomeProps> { props ->
         }
         Typography {
             variant = TypographyVariant.h4
-
-            +"README"
+            +"About ME"
         }
         Typography {
-            +"Kotlinが大好きな高専生です"
-            +Date(Date.now()).toDateString()
+            +"Kotlinが大好きな高専生です。"
+            +"${calcBirthday()}歳です。"
         }
 
     }
 
+}
+
+fun calcBirthday(today:Double=Date.now()): Double {
+    val now=Date(today)
+    return (now.getFullYear()-2006.0)+((now.getMonth()-8.0)/12.0)+((now.getDate()-30.0)/30.0/12.0)
 }

@@ -1,5 +1,5 @@
 plugins {
-    kotlin("js") version "1.7.10"
+    kotlin("js") version "1.7.20"
 }
 
 group = "me.unity"
@@ -19,6 +19,7 @@ dependencies {
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-mui")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-mui-icons")
+    testImplementation(kotlin("test-js"))
 }
 
 kotlin {
@@ -26,7 +27,16 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
-                cssSupport.enabled = true
+               cssSupport{
+                   enabled=true
+               }
+
+            }
+            dceTask {
+                dceOptions.devMode = true
+            }
+            testTask {
+                useMocha()
             }
         }
     }
