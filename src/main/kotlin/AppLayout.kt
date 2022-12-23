@@ -36,7 +36,7 @@ val AppLayout = FC<Props> {
             Outlet()
         }
         footer {
-
+            
         }
     }
 }

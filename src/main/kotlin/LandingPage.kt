@@ -1,26 +1,28 @@
-import csstype.*
+import csstype.AlignItems
+import csstype.TextAlign
+import csstype.px
 import emotion.react.css
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
 import mui.material.*
-import mui.material.Size
 import mui.material.styles.TypographyVariant
 import mui.system.responsive
 import mui.system.sx
-import muix.pickers.DateTimePickerProps
-import org.w3c.dom.HTML.div
-import react.FC
-import react.Props
+import react.*
 import react.dom.html.ReactHTML.div
-import react.useState
 import kotlin.js.Date
 
 external interface WelcomeProps : Props {
     var name: String
 }
 
+fun a(){
+    Box
+}
+
 val LandingPage = FC<WelcomeProps> { props ->
     var name by useState(props.name)
+
     Box {
         Stack {
             sx {
@@ -57,16 +59,15 @@ val LandingPage = FC<WelcomeProps> { props ->
             }
 
         }
-        div{
-           css {
-               width=100.px
-               height=30.px
-
-           }
+        div {
+            css {
+                width = 100.px
+                height = 30.px
+            }
         }
         Typography {
             variant = TypographyVariant.h4
-            +"About ME"
+            +"README"
         }
         Typography {
             +"Kotlinが大好きな高専生です。"
@@ -76,12 +77,10 @@ val LandingPage = FC<WelcomeProps> { props ->
             variant = TypographyVariant.h4
             +"Skills"
         }
-
     }
-
 }
 
-fun calcBirthday(today:Double=Date.now()): Double {
-    val now=Date(today)
-    return (now.getFullYear()-2006.0)+((now.getMonth()-8.0)/12.0)+((now.getDate()-30.0)/30.0/12.0)
+fun calcBirthday(today: Double = Date.now()): Double {
+    val now = Date(today)
+    return (now.getFullYear() - 2006.0) + ((now.getMonth() - 8.0) / 12.0) + ((now.getDate() - 30.0) / 30.0 / 12.0)
 }

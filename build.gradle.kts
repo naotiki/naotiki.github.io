@@ -1,5 +1,5 @@
 plugins {
-    kotlin("js") version "1.7.20"
+    kotlin("js") version "1.7.21"
 }
 
 group = "me.unity"
@@ -8,7 +8,7 @@ version = "1.0-SNAPSHOT"
 repositories {
     mavenCentral()
 }
-val kotlinWrappersVersion = "1.0.0-pre.361"
+val kotlinWrappersVersion = "1.0.0-pre.462"
 dependencies {
     implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:$kotlinWrappersVersion"))
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
@@ -27,10 +27,15 @@ kotlin {
         binaries.executable()
         browser {
             commonWebpackConfig {
-               cssSupport{
-                   enabled=true
-               }
+                cssSupport {
+                    enabled = true
+                }
 
+
+            }
+
+            webpackTask {
+                args.add("--history-api-fallback")
             }
             dceTask {
                 dceOptions.devMode = true
