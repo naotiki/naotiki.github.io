@@ -28,12 +28,12 @@ fun main() {
 
                 Route {
                     index = true
-                    element = createElement(Artifacts)
+                    element = createElement(LandingPage)
 
                 }
                 Route {
-                    path="/aaaaa"
-                    element = createElement(LandingPage)
+                    path="/artifacts"
+                    element = createElement(Artifacts)
                 }
 
 

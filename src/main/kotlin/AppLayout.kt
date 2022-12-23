@@ -1,12 +1,7 @@
-import csstype.Bottom
 import csstype.Position
 import csstype.px
-import emotion.react.css
-import mui.icons.material.Add
 import mui.icons.material.Menu
-import mui.material.Fab
-import mui.system.SxProps
-import mui.system.Theme
+import mui.material.*
 import mui.system.sx
 import react.FC
 import react.Props
@@ -19,7 +14,37 @@ import react.useState
 val AppLayout = FC<Props> {
     var isDrawerOpen by useState(false)
     div {
-
+        Drawer {
+            anchor = DrawerAnchor.left
+            open = isDrawerOpen
+            onClose = { b: dynamic, s: String ->
+                isDrawerOpen = !isDrawerOpen
+            }
+            Box {
+                sx {
+                    width = 250.px
+                }
+                List {
+                    ListItem{
+                        +"Naotiki/"
+                    }
+                    ListItem{
+                        ListItemButton{
+                            ListItemText{
+                                +"About"
+                            }
+                        }
+                    }
+                    ListItem{
+                        ListItemButton{
+                            ListItemText{
+                                +"Artifact"
+                            }
+                        }
+                    }
+                }
+            }
+        }
         Fab {
             sx {
                 position = Position.absolute
@@ -36,7 +61,7 @@ val AppLayout = FC<Props> {
             Outlet()
         }
         footer {
-            
+
         }
     }
 }

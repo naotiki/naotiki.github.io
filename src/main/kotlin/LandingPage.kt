@@ -73,10 +73,7 @@ val LandingPage = FC<WelcomeProps> { props ->
             +"Kotlinが大好きな高専生です。"
             +"${calcBirthday()}歳です。"
         }
-        Typography {
-            variant = TypographyVariant.h4
-            +"Skills"
-        }
+
     }
 }
 

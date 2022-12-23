@@ -34,12 +34,12 @@ kotlin {
 
             }
 
-            webpackTask {
+            /*webpackTask {
                 args.add("--history-api-fallback")
-            }
-            dceTask {
+            }*/
+            /*dceTask {
                 dceOptions.devMode = true
-            }
+            }*/
             testTask {
                 useMocha()
             }
