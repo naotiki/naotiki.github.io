@@ -19,8 +19,8 @@ import react.router.Outlet
 import react.useContext
 import react.useState
 
-val Offset = div.styled { htmlAttributes, theme ->
-    +((theme.unsafeCast<mui.material.styles.Theme>()).mixins.toolbar.unsafeCast<Properties>())
+val Offset = div.styled { _, theme ->
+    +theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
 }
 val AppLayout = FC<Props> {
     val theme= useTheme<mui.material.styles.Theme>()
@@ -64,10 +64,10 @@ val AppLayout = FC<Props> {
                     }
                     ListItem {
                         Link {
-                            href = "/artifacts"
+                            href = "/works"
                             ListItemButton {
                                 ListItemText {
-                                    +"Artifacts"
+                                    +"Works"
                                 }
                             }
                         }
@@ -119,9 +119,9 @@ val AppLayout = FC<Props> {
                         +"About"
                     }
                     Button {
-                        href = "/artifacts"
+                        href = "/works"
                         color = ButtonColor.inherit
-                        +"Artifacts"
+                        +"Works"
                     }
                     IconButton{
                         onClick= { colorMode.toggleColorMode() }
