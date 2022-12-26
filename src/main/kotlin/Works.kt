@@ -28,12 +28,8 @@ val Works = FC<WelcomeProps> { props ->
                     asDynamic().sm=6
                     asDynamic().xs=12
                     Card {
-                        CardMedia {
-
-                        }
                         CardHeader {
                             title = ReactNode(it.name)
-
                         }
                         CardContent {
                             Typography{

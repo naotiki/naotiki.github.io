@@ -3,21 +3,22 @@ import csstype.TextAlign
 import csstype.WhiteSpace
 import csstype.px
 import emotion.react.css
-import js.core.jso
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
 import mui.material.*
 import mui.material.styles.TypographyVariant
 import mui.system.responsive
 import mui.system.sx
-import react.*
+import react.FC
+import react.Props
 import react.dom.html.ReactHTML.div
+import react.useState
 import kotlin.js.Date
+import kotlin.math.round
 
 external interface WelcomeProps : Props {
     var name: String
 }
-
 
 
 val LandingPage = FC<WelcomeProps> { props ->
@@ -28,13 +29,13 @@ val LandingPage = FC<WelcomeProps> { props ->
             sx {
                 alignItems = AlignItems.center
             }
-                Avatar {
-                    src = "naotiki_icon.webp"
-                    sx {
-                        width = 256.px
-                        height = 256.px
-                    }
+            Avatar {
+                src = "naotiki_icon.webp"
+                sx {
+                    width = 256.px
+                    height = 256.px
                 }
+            }
 
             Typography {
                 variant = TypographyVariant.h3
@@ -71,12 +72,12 @@ val LandingPage = FC<WelcomeProps> { props ->
             +"README"
         }
         Typography {
-            variant=TypographyVariant.body1
-            sx{
-                whiteSpace= WhiteSpace.preWrap
+            variant = TypographyVariant.body1
+            sx {
+                whiteSpace = WhiteSpace.preWrap
             }
             +"Kotlinが大好きな高専生です。\n"
-            +"${calcBirthday()}歳です。"
+            +"約${calcBirthday()}歳です。"
         }
 
     }
@@ -84,5 +85,6 @@ val LandingPage = FC<WelcomeProps> { props ->
 
 fun calcBirthday(today: Double = Date.now()): Double {
     val now = Date(today)
-    return (now.getFullYear() - 2006.0) + ((now.getMonth() - 8.0) / 12.0) + ((now.getDate() - 30.0) / 30.0 / 12.0)
+    return round((((now.getFullYear() - 2006.0) + ((now.getMonth() - 8.0) / 12.0) + ((now.getDate() - 30.0) / 30.0 /
+            12.0)))*10000.0)/10000.0
 }
