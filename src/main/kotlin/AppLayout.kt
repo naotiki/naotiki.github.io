@@ -1,37 +1,33 @@
 import csstype.*
+import emotion.react.css
 import emotion.styled.styled
-import mui.icons.material.Brightness4
-import mui.icons.material.Brightness7
-import mui.icons.material.GitHub
+import mui.icons.material.*
 import mui.icons.material.Menu
 import mui.material.*
+import mui.material.Link
+import mui.material.List
 import mui.material.styles.TypographyVariant
 import mui.material.styles.useTheme
 import mui.system.Breakpoint
 import mui.system.Theme
+import mui.system.responsive
 import mui.system.sx
-import react.FC
-import react.Props
+import react.*
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.footer
 import react.dom.html.ReactHTML.main
 import react.router.Outlet
-import react.useContext
-import react.useState
 
 val Offset = div.styled { _, theme ->
     +theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
 }
 val AppLayout = FC<Props> {
-    val theme= useTheme<mui.material.styles.Theme>()
+    val theme = useTheme<mui.material.styles.Theme>()
     var isDrawerOpen by useState(false)
     val isDownSm = useMediaQuery<Theme>({
         it.breakpoints.down(Breakpoint.sm)
     })
     val colorMode = useContext(ColorModeContext)
-
-
-
     if (isDownSm) {
         Drawer {
             anchor = DrawerAnchor.left
@@ -39,25 +35,22 @@ val AppLayout = FC<Props> {
             onClose = { b: dynamic, s: String ->
                 isDrawerOpen = !isDrawerOpen
             }
-            Box {
+            Stack {
+                direction= responsive(StackDirection.column)
                 sx {
                     width = 250.px
+                    height=100.pct
                 }
                 List {
-                    sx {
-
-                    }
                     ListItem {
                         +"Naotiki/"
                     }
                     ListItem {
-
                         Link {
                             href = "/"
                             ListItemButton {
-
                                 ListItemText {
-                                    +"About Naotiki"
+                                    +"About"
                                 }
                             }
                         }
@@ -73,16 +66,26 @@ val AppLayout = FC<Props> {
                         }
                     }
                 }
-
-                Link {
-                    sx {
-                        position = Position.absolute
-                        bottom = 5.px
+                div{
+                    css {
+                        marginTop=Auto.auto
                     }
+                }
+                Button {
+                    onClick = { colorMode.toggleColorMode() }
+                    color = ButtonColor.inherit
+                    startIcon=if (theme.palette.mode == PaletteMode.light)
+                        LightModeOutlined.create()
+                    else DarkModeOutlined.create()
+                    +if (theme.palette.mode == PaletteMode.light)"目がぁぁぁぁ" else "Cool"
+                }
+                Link {
                     href = "https://github.com/naotiki/naotiki.github.io"
 
                     Typography {
-                        GitHub()
+                        GitHub{
+                            sx { verticalAlign= VerticalAlign.middle }
+                        }
                         +"naotiki/naotiki.github.io"
                     }
                 }
@@ -106,9 +109,9 @@ val AppLayout = FC<Props> {
                 // disableGutters=true
                 Typography {
                     variant = TypographyVariant.h5
-                    component= div
+                    component = div
                     sx {
-                        flexGrow=1.asDynamic()
+                        flexGrow = 1.asDynamic()
                     }
                     +"Naotiki"
                 }
@@ -124,11 +127,17 @@ val AppLayout = FC<Props> {
                         +"Works"
                     }
                     IconButton{
-                        onClick= { colorMode.toggleColorMode() }
-                        color=IconButtonColor.inherit
-                        if (theme.palette.mode==PaletteMode.light)
-                            Brightness4()
-                        else Brightness7()
+                        asDynamic().href= "https://github.com/naotiki/naotiki.github.io"
+                        GitHub{
+                            sx { verticalAlign= VerticalAlign.middle }
+                        }
+                    }
+                    IconButton {
+                        onClick = { colorMode.toggleColorMode() }
+                        color = IconButtonColor.inherit
+                        if (theme.palette.mode == PaletteMode.light)
+                            LightModeOutlined()
+                        else DarkModeOutlined()
                     }
                 }
             }
