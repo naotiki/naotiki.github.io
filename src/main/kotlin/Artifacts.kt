@@ -1,33 +1,63 @@
+import csstype.JustifyContent
+import csstype.WhiteSpace
 import mui.material.*
+import mui.material.styles.TypographyVariant
 import mui.system.responsive
+import mui.system.sx
 import react.FC
+import react.create
 
-val Artifacts= FC<WelcomeProps>{props->
-    Grid{
-        container=true
-        Grid{
-            item=true
-            columns= responsive(1)
-            Card{
-                CardMedia{
+val Artifacts = FC<WelcomeProps> { props ->
 
-                }
-                CardActionArea{
-                    CardContent {
-                        +"Lorem ipsum dolor sit amet ex accusam lorem stet volutpat stet autem takimata. Ea kasd nobis magna tempor et est dolore elitr accumsan amet feugait ipsum. Nostrud kasd et autem lorem quis et et justo. Ea erat tempor. Magna vero et feugiat no sed in et elitr eos consequat exerci consetetur sed kasd sadipscing lorem et eleifend."
-                    }
-                }
-                CardActions{
-                    Button{
-                        +"詳細"
-                    }
-                    Button{
-                        +"開く"
+
+    Container {
+        Typography {
+            variant = TypographyVariant.h4
+            align = TypographyAlign.center
+            +"つくったもの"
+        }
+        Grid {
+            container = true
+            spacing = responsive(2)
+            sx {
+                justifyContent = JustifyContent.center
+            }
+            artifacts.forEach {
+                Grid {
+                    item = true
+                    columns = responsive(2)
+                    Card {
+                        CardMedia {
+
+                        }
+                        CardHeader {
+                            title = Typography.create {
+                                variant = TypographyVariant.h6
+                                +it.name
+                            }
+
+                        }
+                        CardContent {
+                            Typography{
+                                sx{
+                                    whiteSpace= WhiteSpace.preWrap
+                                }
+                                +it.description
+                            }
+                        }
+                        CardActions {
+                            Button {
+                                +"詳細"
+                            }
+                            Button {
+                                +"開く"
+                            }
+                        }
                     }
                 }
             }
-        }
 
+        }
     }
 
 }

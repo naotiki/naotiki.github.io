@@ -1,7 +1,9 @@
 import csstype.AlignItems
 import csstype.TextAlign
+import csstype.WhiteSpace
 import csstype.px
 import emotion.react.css
+import js.core.jso
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
 import mui.material.*
@@ -16,35 +18,34 @@ external interface WelcomeProps : Props {
     var name: String
 }
 
-fun a(){
-    Box
-}
+
 
 val LandingPage = FC<WelcomeProps> { props ->
     var name by useState(props.name)
 
-    Box {
+    Container {
         Stack {
             sx {
                 alignItems = AlignItems.center
             }
-            Avatar {
-                src = "naotiki_icon.webp"
-                sx {
-                    width = 256.px
-                    height = 256.px
+                Avatar {
+                    src = "naotiki_icon.webp"
+                    sx {
+                        width = 256.px
+                        height = 256.px
+                    }
                 }
-            }
+
             Typography {
                 variant = TypographyVariant.h3
                 sx { textAlign = TextAlign.center }
-                +"Naotiki"
+                +"なおちき/Naotiki"
             }
             Stack {
                 direction = responsive(StackDirection.row)
                 spacing = responsive(2)
                 Fab {
-                    href = "https://twitter.com/NaotikiKt"
+                    href = "https://twitter.com/naotikiKt"
                     size = Size.small
                     color = FabColor.primary
                     Twitter()
@@ -70,7 +71,11 @@ val LandingPage = FC<WelcomeProps> { props ->
             +"README"
         }
         Typography {
-            +"Kotlinが大好きな高専生です。"
+            variant=TypographyVariant.body1
+            sx{
+                whiteSpace= WhiteSpace.preWrap
+            }
+            +"Kotlinが大好きな高専生です。\n"
             +"${calcBirthday()}歳です。"
         }
 
