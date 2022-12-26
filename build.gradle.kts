@@ -19,6 +19,9 @@ dependencies {
     implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-mui")
     implementation("org.jetbrains.kotlin-wrappers:kotlin-mui-icons")
+
+    implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
+
     testImplementation(kotlin("test-js"))
 }
 
@@ -30,10 +33,7 @@ kotlin {
                 cssSupport {
                     enabled = true
                 }
-
-
             }
-
             /*webpackTask {
                 args.add("--history-api-fallback")
             }*/

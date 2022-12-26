@@ -3,4 +3,4 @@
 
 謎のプライドにより、全てKotlin/JSで書き切ります
 
-PushするとGithub Actionsが動きます
+mainにPushするとGithub Actionsが動きます
