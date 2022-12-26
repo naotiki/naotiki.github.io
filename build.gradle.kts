@@ -1,6 +1,6 @@
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
-
+import java.nio.file.Files
 plugins {
     kotlin("js") version "1.7.21"
 }
@@ -55,6 +55,10 @@ kotlin {
 
 tasks.build{
     dependsOn("generateHtml")
+    doLast {
+        val dist=buildDir.resolve("distributions").toPath()
+        Files.copy(dist.resolve("index.html"),dist.resolve("404.html"))
+    }
 }
 task("generateHtml") {
     File("src/main/resources/index.html").bufferedWriter().run {
