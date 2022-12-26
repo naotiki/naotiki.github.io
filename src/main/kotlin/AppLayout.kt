@@ -1,7 +1,14 @@
-import csstype.Position
-import csstype.px
+import csstype.*
+import emotion.styled.styled
+import mui.icons.material.Brightness4
+import mui.icons.material.Brightness7
+import mui.icons.material.GitHub
 import mui.icons.material.Menu
 import mui.material.*
+import mui.material.styles.TypographyVariant
+import mui.material.styles.useTheme
+import mui.system.Breakpoint
+import mui.system.Theme
 import mui.system.sx
 import react.FC
 import react.Props
@@ -9,11 +16,23 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.footer
 import react.dom.html.ReactHTML.main
 import react.router.Outlet
+import react.useContext
 import react.useState
 
+val Offset = div.styled { htmlAttributes, theme ->
+    +((theme.unsafeCast<mui.material.styles.Theme>()).mixins.toolbar.unsafeCast<Properties>())
+}
 val AppLayout = FC<Props> {
+    val theme= useTheme<mui.material.styles.Theme>()
     var isDrawerOpen by useState(false)
-    div {
+    val isDownSm = useMediaQuery<Theme>({
+        it.breakpoints.down(Breakpoint.sm)
+    })
+    val colorMode = useContext(ColorModeContext)
+
+
+
+    if (isDownSm) {
         Drawer {
             anchor = DrawerAnchor.left
             open = isDrawerOpen
@@ -25,22 +44,46 @@ val AppLayout = FC<Props> {
                     width = 250.px
                 }
                 List {
-                    ListItem{
+                    sx {
+
+                    }
+                    ListItem {
                         +"Naotiki/"
                     }
-                    ListItem{
-                        ListItemButton{
-                            ListItemText{
-                                +"About"
+                    ListItem {
+
+                        Link {
+                            href = "/"
+                            ListItemButton {
+
+                                ListItemText {
+                                    +"About Naotiki"
+                                }
                             }
                         }
                     }
-                    ListItem{
-                        ListItemButton{
-                            ListItemText{
-                                +"Artifact"
+                    ListItem {
+                        Link {
+                            href = "/artifacts"
+                            ListItemButton {
+                                ListItemText {
+                                    +"Artifacts"
+                                }
                             }
                         }
+                    }
+                }
+
+                Link {
+                    sx {
+                        position = Position.absolute
+                        bottom = 5.px
+                    }
+                    href = "https://github.com/naotiki/naotiki.github.io"
+
+                    Typography {
+                        GitHub()
+                        +"naotiki/naotiki.github.io"
                     }
                 }
             }
@@ -56,12 +99,50 @@ val AppLayout = FC<Props> {
             }
             Menu()
         }
-        main {
-            //ページが挿入される
-            Outlet()
-        }
-        footer {
+    } else {
+        AppBar {
+            //position = AppBarPosition.fixed
+            Toolbar {
+                // disableGutters=true
+                Typography {
+                    variant = TypographyVariant.h5
+                    component= div
+                    sx {
+                        flexGrow=1.asDynamic()
+                    }
+                    +"Naotiki"
+                }
+                Box {
+                    Button {
+                        color = ButtonColor.inherit
+                        href = "/"
+                        +"About"
+                    }
+                    Button {
+                        href = "/artifacts"
+                        color = ButtonColor.inherit
+                        +"Artifacts"
+                    }
+                    IconButton{
+                        onClick= { colorMode.toggleColorMode() }
+                        color=IconButtonColor.inherit
+                        if (theme.palette.mode==PaletteMode.light)
+                            Brightness4()
+                        else Brightness7()
+                    }
+                }
+            }
 
         }
+
     }
+    Offset()
+    main {
+        //ページが挿入される
+        Outlet()
+    }
+    footer {
+
+    }
+
 }
