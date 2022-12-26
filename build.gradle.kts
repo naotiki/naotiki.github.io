@@ -1,6 +1,8 @@
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
 import java.nio.file.Files
+import java.nio.file.StandardCopyOption
+
 plugins {
     kotlin("js") version "1.7.21"
 }
@@ -53,11 +55,22 @@ kotlin {
     }
 }
 
-tasks.build{
+tasks.named("kotlinNodeJsSetup"){
+    doFirst {
+        val dir = rootDir.resolve("webpack.config.d")
+        dir.mkdir()
+        dir.resolve("webpack.config.js").writeText(
+            """
+                if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}
+                """.trimIndent()
+        )
+    }
     dependsOn("generateHtml")
+}
+tasks.build{
     doLast {
-        val dist=buildDir.resolve("distributions").toPath()
-        Files.copy(dist.resolve("index.html"),dist.resolve("404.html"))
+        val dist = buildDir.resolve("distributions").toPath()
+        Files.copy(dist.resolve("index.html"), dist.resolve("404.html"),StandardCopyOption.REPLACE_EXISTING)
     }
 }
 task("generateHtml") {
