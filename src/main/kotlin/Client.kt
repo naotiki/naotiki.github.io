@@ -5,10 +5,6 @@ import react.create
 import react.createContext
 import react.dom.client.createRoot
 
-data class ColorModeContextData(val toggleColorMode: () -> Unit = {})
-
-val DarkModeContext = createContext<UseDarkModeOutput>()
-
 fun main() {
     val container = document.createElement("div").also {
         document.body.appendChild(it)

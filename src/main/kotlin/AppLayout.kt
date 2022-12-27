@@ -1,13 +1,12 @@
 import csstype.*
 import emotion.react.css
 import emotion.styled.styled
-import mui.icons.material.*
+import mui.icons.material.DarkModeOutlined
+import mui.icons.material.GitHub
+import mui.icons.material.LightModeOutlined
 import mui.icons.material.Menu
 import mui.material.*
-import mui.material.Link
-import mui.material.List
 import mui.material.styles.TypographyVariant
-import mui.material.styles.useTheme
 import mui.system.Breakpoint
 import mui.system.Theme
 import mui.system.responsive
@@ -22,7 +21,6 @@ val Offset = div.styled { _, theme ->
     +theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
 }
 val AppLayout = FC<Props> {
-    val theme = useTheme<mui.material.styles.Theme>()
     var isDrawerOpen by useState(false)
     val isDownSm = useMediaQuery<Theme>({
         it.breakpoints.down(Breakpoint.sm)
@@ -32,7 +30,7 @@ val AppLayout = FC<Props> {
         Drawer {
             anchor = DrawerAnchor.left
             open = isDrawerOpen
-            onClose = { b: dynamic, s: String ->
+            onClose = { _, _ ->
                 isDrawerOpen = !isDrawerOpen
             }
             Stack {
@@ -74,20 +72,15 @@ val AppLayout = FC<Props> {
                 Button {
                     onClick = { colorMode.toggle() }
                     color = ButtonColor.inherit
-                    startIcon=if (colorMode.isDarkMode)
+                    startIcon = if (colorMode.isDarkMode)
                         DarkModeOutlined.create()
                     else LightModeOutlined.create()
                     +if (colorMode.isDarkMode) "Cool" else "目がぁぁぁぁ"
                 }
-                Link {
+                Button {
                     href = "https://github.com/naotiki/naotiki.github.io"
-
-                    Typography {
-                        GitHub{
-                            sx { verticalAlign= VerticalAlign.middle }
-                        }
-                        +"naotiki/naotiki.github.io"
-                    }
+                    GitHub()
+                    +"naotiki/naotiki.github.io"
                 }
             }
         }
@@ -122,28 +115,35 @@ val AppLayout = FC<Props> {
                         +"About"
                     }
                     Button {
+
                         href = "/works"
                         color = ButtonColor.inherit
                         +"Works"
                     }
-                    IconButton{
-                        asDynamic().href= "https://github.com/naotiki/naotiki.github.io"
-                        GitHub{
-                            sx { verticalAlign= VerticalAlign.middle }
+                    Tooltip {
+                        title = ReactNode("naotiki/naotiki.github.io")
+                        IconButton {
+                            asDynamic().href = "https://github.com/naotiki/naotiki.github.io"
+                            GitHub {
+                                sx { verticalAlign = VerticalAlign.middle }
+                            }
                         }
                     }
-                    IconButton {
-                        onClick = { colorMode.toggle() }
-                        color = IconButtonColor.inherit
-                        if (colorMode.isDarkMode)
-                            DarkModeOutlined()
-                        else LightModeOutlined()
+                    Tooltip {
+                        title = ReactNode(if (colorMode.isDarkMode) "Cool" else "目がぁぁぁぁ")
+                        IconButton {
+                            onClick = { colorMode.toggle() }
+                            color = IconButtonColor.inherit
+                            if (colorMode.isDarkMode)
+                                DarkModeOutlined()
+                            else LightModeOutlined()
+
+                        }
                     }
                 }
             }
 
         }
-
     }
     Offset()
     main {

@@ -23,7 +23,6 @@ external interface WelcomeProps : Props {
 
 val LandingPage = FC<WelcomeProps> { props ->
     var name by useState(props.name)
-
     Container {
         Stack {
             sx {
@@ -40,7 +39,7 @@ val LandingPage = FC<WelcomeProps> { props ->
             Typography {
                 variant = TypographyVariant.h3
                 sx { textAlign = TextAlign.center }
-                +"なおちき/Naotiki"
+                +"なおちき / Naotiki"
             }
             Stack {
                 direction = responsive(StackDirection.row)
@@ -57,9 +56,7 @@ val LandingPage = FC<WelcomeProps> { props ->
                     color = FabColor.primary
                     GitHub()
                 }
-
             }
-
         }
         div {
             css {

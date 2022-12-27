@@ -1,6 +1,9 @@
 import csstype.JustifyContent
 import csstype.WhiteSpace
-import mui.icons.material.*
+import mui.icons.material.CalendarMonth
+import mui.icons.material.GitHub
+import mui.icons.material.Group
+import mui.icons.material.Launch
 import mui.material.*
 import mui.material.styles.TypographyVariant
 import mui.system.responsive
@@ -25,42 +28,50 @@ val Works = FC<WelcomeProps> { props ->
             works.forEach {
                 Grid {
                     item = true
-                    asDynamic().sm=6
-                    asDynamic().xs=12
+                    asDynamic().sm = 6
+                    asDynamic().xs = 12
                     Card {
                         CardHeader {
                             title = ReactNode(it.name)
                         }
                         CardContent {
-                            Typography{
-                                sx{
-                                    whiteSpace= WhiteSpace.preWrap
+                            Typography {
+                                sx {
+                                    whiteSpace = WhiteSpace.preWrap
                                 }
                                 +it.description
                             }
-                            if (it.jointDevelopment) {
-                                Stack{
-                                    direction= responsive(StackDirection.row)
-                                    spacing= responsive(1)
-                                    Chip{
-                                        size=Size.small
-                                        label= ReactNode("共同開発")
-                                        icon= Group.create()
+
+                            Stack {
+                                direction = responsive(StackDirection.row)
+                                spacing = responsive(1)
+
+                                Chip {
+                                    size = Size.small
+                                    label = ReactNode(it.update.toString())
+                                    icon = CalendarMonth.create()
+                                }
+                                if (it.jointDevelopment) {
+                                    Chip {
+                                        size = Size.small
+                                        label = ReactNode("共同開発")
+                                        icon = Group.create()
                                     }
                                 }
+
                             }
                         }
                         CardActions {
 
                             Button {
-                                href=it.artifactUrl
-                                startIcon= Launch.create()
+                                href = it.artifactUrl
+                                startIcon = Launch.create()
                                 +"開く"
                             }
-                            if (it.githubUrl!=null){
+                            if (it.githubUrl != null) {
                                 Button {
-                                    href=it.githubUrl
-                                    startIcon= GitHub.create()
+                                    href = it.githubUrl
+                                    startIcon = GitHub.create()
                                     +"GitHub"
                                 }
                             }

@@ -1,3 +1,4 @@
+import hooks.UseDarkModeOutput
 import hooks.useDarkMode
 import js.core.jso
 import mui.material.*
@@ -9,18 +10,20 @@ import react.router.Route
 import react.router.Routes
 import react.router.dom.BrowserRouter
 
+val DarkModeContext = createContext<UseDarkModeOutput>()
+
 val App = FC<Props> {
     DarkModeContext.Provider {
-        val a=useDarkMode()
-        val theme = useMemo(a.isDarkMode) {
+        val darkModeOutput = useDarkMode()
+        val theme = useMemo(darkModeOutput.isDarkMode) {
             createTheme(jso {
                 palette = jso {
-                    mode = if (a.isDarkMode) PaletteMode.dark
+                    mode = if (darkModeOutput.isDarkMode) PaletteMode.dark
                     else PaletteMode.light
                 }
             })
         }
-        value = a
+        value = darkModeOutput
         ThemeProvider {
             this.theme = theme
             CssBaseline()
@@ -40,25 +43,22 @@ val App = FC<Props> {
                         Route {
                             path = "*"
                             element =
-                                Container.create{
+                                Container.create {
                                     Typography {
-                                        variant=TypographyVariant.h1
-                                        align=TypographyAlign.center
+                                        variant = TypographyVariant.h1
+                                        align = TypographyAlign.center
                                         +"404 Not Found"
                                     }
                                     Typography {
-                                        variant=TypographyVariant.h6
-                                        align=TypographyAlign.center
+                                        variant = TypographyVariant.h6
+                                        align = TypographyAlign.center
                                         +"ページが見つかりませんでした"
                                     }
                                 }
                         }
                     }
-
                 }
-
             }
-
         }
     }
 }
