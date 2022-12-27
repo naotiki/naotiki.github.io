@@ -1,3 +1,4 @@
+import hooks.useDarkMode
 import js.core.jso
 import mui.material.*
 import mui.material.styles.ThemeProvider
@@ -9,24 +10,17 @@ import react.router.Routes
 import react.router.dom.BrowserRouter
 
 val App = FC<Props> {
-    ColorModeContext.Provider {
-        val (colorModeState, setColorModeState) = useState(PaletteMode.light)
-        val colorMode = useMemo(Unit) {
-            ColorModeContextData {
-                setColorModeState {
-                    if (it == PaletteMode.light) PaletteMode.dark
-                    else PaletteMode.light
-                }
-            }
-        }
-        val theme = useMemo(colorModeState) {
+    DarkModeContext.Provider {
+        val a=useDarkMode()
+        val theme = useMemo(a.isDarkMode) {
             createTheme(jso {
                 palette = jso {
-                    mode = colorModeState
+                    mode = if (a.isDarkMode) PaletteMode.dark
+                    else PaletteMode.light
                 }
             })
         }
-        value = colorMode
+        value = a
         ThemeProvider {
             this.theme = theme
             CssBaseline()

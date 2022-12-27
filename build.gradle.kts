@@ -17,18 +17,23 @@ buildscript {
 repositories {
     mavenCentral()
 }
-val kotlinWrappersVersion = "1.0.0-pre.462"
-dependencies {
-    implementation(enforcedPlatform("org.jetbrains.kotlin-wrappers:kotlin-wrappers-bom:$kotlinWrappersVersion"))
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-dom")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-emotion")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-router-dom")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-redux")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-react-redux")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-mui")
-    implementation("org.jetbrains.kotlin-wrappers:kotlin-mui-icons")
+val kotlinWrappersVersion = "1.0.0-pre.463"
+fun kotlinw(target:String)="org.jetbrains.kotlin-wrappers:kotlin-$target"
 
+dependencies {
+    //wrappers
+    implementation(enforcedPlatform(kotlinw("wrappers-bom:$kotlinWrappersVersion")))
+    implementation(kotlinw("react"))
+    implementation(kotlinw("react-dom"))
+    implementation(kotlinw("emotion"))
+    implementation(kotlinw("react-router-dom"))
+    implementation(kotlinw("redux"))
+    implementation(kotlinw("react-redux"))
+    implementation(kotlinw("mui"))
+    implementation(kotlinw("mui-icons"))
+    //npm
+    implementation(npm("usehooks-ts", "2.8.0"))
+    //others...
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
 
     testImplementation(kotlin("test-js"))
@@ -42,19 +47,21 @@ kotlin {
                     enabled = true
                 }
             }
-            /*webpackTask {
-                args.add("--history-api-fallback")
-            }*/
             /*dceTask {
                 dceOptions.devMode = true
             }*/
+        }
+        nodejs {
             testTask {
                 useMocha()
             }
         }
     }
 }
-
+rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion="16.15.0"
+    // or true for default behavior
+}
 tasks.named("kotlinNodeJsSetup"){
     doFirst {
         val dir = rootDir.resolve("webpack.config.d")

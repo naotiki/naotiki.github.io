@@ -27,7 +27,7 @@ val AppLayout = FC<Props> {
     val isDownSm = useMediaQuery<Theme>({
         it.breakpoints.down(Breakpoint.sm)
     })
-    val colorMode = useContext(ColorModeContext)
+    val colorMode = useContext(DarkModeContext)
     if (isDownSm) {
         Drawer {
             anchor = DrawerAnchor.left
@@ -72,12 +72,12 @@ val AppLayout = FC<Props> {
                     }
                 }
                 Button {
-                    onClick = { colorMode.toggleColorMode() }
+                    onClick = { colorMode.toggle() }
                     color = ButtonColor.inherit
-                    startIcon=if (theme.palette.mode == PaletteMode.light)
-                        LightModeOutlined.create()
-                    else DarkModeOutlined.create()
-                    +if (theme.palette.mode == PaletteMode.light)"目がぁぁぁぁ" else "Cool"
+                    startIcon=if (colorMode.isDarkMode)
+                        DarkModeOutlined.create()
+                    else LightModeOutlined.create()
+                    +if (colorMode.isDarkMode) "Cool" else "目がぁぁぁぁ"
                 }
                 Link {
                     href = "https://github.com/naotiki/naotiki.github.io"
@@ -133,11 +133,11 @@ val AppLayout = FC<Props> {
                         }
                     }
                     IconButton {
-                        onClick = { colorMode.toggleColorMode() }
+                        onClick = { colorMode.toggle() }
                         color = IconButtonColor.inherit
-                        if (theme.palette.mode == PaletteMode.light)
-                            LightModeOutlined()
-                        else DarkModeOutlined()
+                        if (colorMode.isDarkMode)
+                            DarkModeOutlined()
+                        else LightModeOutlined()
                     }
                 }
             }
