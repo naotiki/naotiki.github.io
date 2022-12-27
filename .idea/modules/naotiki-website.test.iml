@@ -6,6 +6,7 @@
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>
           <externalSystemTestTask>browserTest|:|js</externalSystemTestTask>
+          <externalSystemTestTask>nodeTest|:|js</externalSystemTestTask>
         </externalSystemTestTasks>
         <testOutputPath>$MODULE_DIR$/../../build/classes/kotlin/test</testOutputPath>
         <compilerSettings>

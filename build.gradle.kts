@@ -82,6 +82,7 @@ tasks.build{
 }
 task("generateHtml") {
     File("src/main/resources/index.html").bufferedWriter().run {
+        appendLine("<!DOCTYPE html>")
         appendHTML().html {
             lang = "ja"
             head {
