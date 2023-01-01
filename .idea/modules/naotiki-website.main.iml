@@ -6,7 +6,7 @@
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <productionOutputPath>$MODULE_DIR$/../../build/classes/kotlin/main</productionOutputPath>
         <compilerSettings>
-          <option name="additionalArguments" value="-Xir-only -Xir-per-module-output-name=naotiki-website -Xir-produce-klib-dir -Xir-module-name=me.unity:naotiki-website" />
+          <option name="additionalArguments" value="-Xir-only -Xir-per-module-output-name=naotiki-website -Xir-produce-klib-dir -Xir-module-name=me.naotiki:naotiki-website" />
         </compilerSettings>
         <compilerArguments>
           <flagArguments>
@@ -20,8 +20,8 @@
             <stringArg name="outputFile" arg="$MODULE_DIR$/../../build/classes/kotlin/main" />
             <stringArg name="sourceMapEmbedSources" arg="never" />
             <stringArg name="target" arg="v5" />
-            <stringArg name="apiVersion" arg="1.7" />
-            <stringArg name="languageVersion" arg="1.7" />
+            <stringArg name="apiVersion" arg="1.8" />
+            <stringArg name="languageVersion" arg="1.8" />
           </stringArguments>
           <arrayArguments>
             <arrayArg name="pluginClasspaths" />

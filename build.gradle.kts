@@ -4,10 +4,10 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 plugins {
-    kotlin("js") version "1.7.21"
+    kotlin("js") version "1.8.0"
 }
 
-group = "me.unity"
+group = "me.naotiki"
 version = "1.0-SNAPSHOT"
 buildscript {
     dependencies {
@@ -44,7 +44,7 @@ kotlin {
         browser {
             commonWebpackConfig {
                 cssSupport {
-                    enabled = true
+                    enabled.set(true)
                 }
             }
             /*dceTask {
@@ -59,21 +59,26 @@ kotlin {
     }
 }
 rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().nodeVersion="16.15.0"
-    // or true for default behavior
+    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().run {
+        download = true // default
+        nodeVersion = "16.15.0" // usehooks-ts require nodeVersion >=16.15.0
+    }
 }
-tasks.named("kotlinNodeJsSetup"){
+
+
+// これはJavaScriptではなくただの文字列をファイルに書き込んでいるだけです。なのでKotlin100%
+tasks.named("kotlinNodeJsSetup") {
     doFirst {
         val dir = rootDir.resolve("webpack.config.d")
         dir.mkdir()
         dir.resolve("webpack.config.js").writeText(
-            """
-                if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}
-                """.trimIndent()
+            //language=javascript
+            """if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}"""
         )
     }
     dependsOn("generateHtml")
 }
+// GitHub Pages 用に404をコピー
 tasks.build{
     doLast {
         val dist = buildDir.resolve("distributions").toPath()
