@@ -16,7 +16,7 @@ val works = listOf(
         "Wikiしりとり",
         """しりとりAIもどき
             |AIに例外を吐かせたらあなたの勝ち""".trimMargin(), LocalDate(2022, Month.MAY, 15),
-        "https://shiritori.naotiki-apps.xyz/", false, "https://github.com/naotiki/wiki-shiritori-nuxt"
+        "https://naotiki.github.io/wiki-shiritori-nuxt", false, "https://github.com/naotiki/wiki-shiritori-nuxt"
     ),WorkItem(
         "Draw R4sh",
         """一瞬でお絵かきバトル！！！
