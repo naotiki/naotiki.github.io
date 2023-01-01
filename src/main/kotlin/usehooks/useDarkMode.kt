@@ -1,7 +1,7 @@
 @file:JsModule("usehooks-ts")
 @file:JsNonModule
 
-package hooks
+package usehooks
 
 @JsName("useDarkMode")
 external fun useDarkMode(defaultValue: Boolean? = definedExternally): UseDarkModeOutput
