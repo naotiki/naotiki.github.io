@@ -43,22 +43,14 @@ val AppLayout = FC<Props> {
                     ListItem {
                         +"Naotiki/"
                     }
-                    ListItem {
-                        Link {
-                            href = "/"
-                            ListItemButton {
-                                ListItemText {
-                                    +"About"
-                                }
-                            }
-                        }
-                    }
-                    ListItem {
-                        Link {
-                            href = "/works"
-                            ListItemButton {
-                                ListItemText {
-                                    +"Works"
+                    Pages.values().forEach {
+                        ListItem {
+                            Link {
+                                href = it.path
+                                ListItemButton {
+                                    ListItemText {
+                                        +it.getName()
+                                    }
                                 }
                             }
                         }
@@ -109,17 +101,14 @@ val AppLayout = FC<Props> {
                     +"Naotiki"
                 }
                 Box {
-                    Button {
-                        color = ButtonColor.inherit
-                        href = "/"
-                        +"About"
+                    Pages.values().forEach {
+                        Button {
+                            color = ButtonColor.inherit
+                            href = it.path
+                            +it.getName()
+                        }
                     }
-                    Button {
 
-                        href = "/works"
-                        color = ButtonColor.inherit
-                        +"Works"
-                    }
                     Tooltip {
                         title = ReactNode("naotiki/naotiki.github.io")
                         IconButton {

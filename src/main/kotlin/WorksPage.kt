@@ -9,10 +9,11 @@ import mui.material.styles.TypographyVariant
 import mui.system.responsive
 import mui.system.sx
 import react.FC
+import react.Props
 import react.ReactNode
 import react.create
 
-val Works = FC<WelcomeProps> { props ->
+val WorksPage = FC<Props> {
     Container {
         Typography {
             variant = TypographyVariant.h4

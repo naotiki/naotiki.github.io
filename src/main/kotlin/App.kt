@@ -1,5 +1,3 @@
-import hooks.UseDarkModeOutput
-import hooks.useDarkMode
 import js.core.jso
 import mui.material.*
 import mui.material.styles.ThemeProvider
@@ -9,12 +7,25 @@ import react.*
 import react.router.Route
 import react.router.Routes
 import react.router.dom.BrowserRouter
+import usehooks.UseDarkModeOutput
+import usehooks.useDarkMode
 
 val DarkModeContext = createContext<UseDarkModeOutput>()
 
+
+enum class Pages(
+    val page: ElementType<Props>, val path: String = "/", private val routeName: String? = null
+) {
+    About(AboutPage, "/"),
+    Works(WorksPage, "/works"),
+    Assets(AssetsPage, "/assets");
+
+    fun getName() = routeName ?: name
+}
+
 val App = FC<Props> {
     DarkModeContext.Provider {
-        val darkModeOutput = useDarkMode()
+        val darkModeOutput = useDarkMode(null)
         val theme = useMemo(darkModeOutput.isDarkMode) {
             createTheme(jso {
                 palette = jso {
@@ -30,15 +41,13 @@ val App = FC<Props> {
             BrowserRouter {
                 Routes {
                     Route {
-                        element = createElement(AppLayout)
-
-                        Route {
-                            index = true
-                            element = createElement(LandingPage)
-                        }
-                        Route {
-                            path = "/works"
-                            element = createElement(Works)
+                        element = AppLayout.create()
+                        Pages.values().forEach {
+                            Route {
+                                if (it.path == "/") index = true
+                                else path = it.path
+                                element = it.page.create()
+                            }
                         }
                         Route {
                             path = "*"

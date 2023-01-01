@@ -12,17 +12,12 @@ import mui.system.sx
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.div
-import react.useState
 import kotlin.js.Date
 import kotlin.math.round
 
-external interface WelcomeProps : Props {
-    var name: String
-}
 
 
-val LandingPage = FC<WelcomeProps> { props ->
-    var name by useState(props.name)
+val AboutPage = FC<Props> {
     Container {
         Stack {
             sx {
