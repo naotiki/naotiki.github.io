@@ -96,6 +96,8 @@ task("generateHtml") {
                     "viewport",
                     content = "initial-scale=1, width=device-width"
                 )
+                link("/favicon.ico", "icon")
+                link("/naotiki.svg", "icon", "image/svg+xml")
                 title("なおちきです")
             }
             body {
