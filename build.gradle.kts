@@ -85,20 +85,35 @@ tasks.build{
         Files.copy(dist.resolve("index.html"), dist.resolve("404.html"),StandardCopyOption.REPLACE_EXISTING)
     }
 }
+
 task("generateHtml") {
+    fun FlowOrPhrasingOrMetaDataContent.metaProp(prop: String, content: String) = meta {
+        attributes["property"] = prop
+        this.content = content
+    }
     File("src/main/resources/index.html").bufferedWriter().run {
         appendLine("<!DOCTYPE html>")
         appendHTML().html {
             lang = "ja"
             head {
+                attributes["prefix"] = "og: https://ogp.me/ns#"
                 meta(charset = "UTF-8")
                 meta(
                     "viewport",
                     content = "initial-scale=1, width=device-width"
                 )
+                link("https://naotiki.me", "canonical")
                 link("/favicon.ico", "icon")
                 link("/naotiki.svg", "icon", "image/svg+xml")
+                metaProp("og:site_name", "なおちきのポートフォリオ")
                 title("なおちきです")
+                metaProp("og:title", "なおちきです")
+                meta("author", "なおちき")
+                meta("description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
+                metaProp("og:description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
+                metaProp("og:image", "https://r2.naotiki.me/NAOTIKI.png")
+                metaProp("twitter:card", "summary_large_image")
+                metaProp("twitter:site", "@naotikiKt")
             }
             body {
                 script(src = "naotiki-website.js") {}
