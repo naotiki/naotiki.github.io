@@ -112,6 +112,8 @@ task("generateHtml") {
                 meta("description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
                 metaProp("og:description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
                 metaProp("og:image", "https://r2.naotiki.me/NAOTIKI.png")
+                metaProp("og:url", "https://naotiki.me")
+                metaProp("og:type", "website")
                 metaProp("twitter:card", "summary_large_image")
                 metaProp("twitter:site", "@naotikiKt")
             }
