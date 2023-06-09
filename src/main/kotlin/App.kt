@@ -4,9 +4,12 @@ import mui.material.styles.ThemeProvider
 import mui.material.styles.TypographyVariant
 import mui.material.styles.createTheme
 import react.*
-import react.router.Route
+import react.router.IndexRoute
+import react.router.LayoutRoute
+import react.router.PathRoute
 import react.router.Routes
 import react.router.dom.BrowserRouter
+import react.router.dom.HashRouter
 import usehooks.UseDarkModeOutput
 import usehooks.useDarkMode
 
@@ -40,30 +43,37 @@ val App = FC<Props> {
             CssBaseline()
             BrowserRouter {
                 Routes {
-                    Route {
+                    LayoutRoute {
                         element = AppLayout.create()
                         Pages.values().forEach {
-                            Route {
-                                if (it.path == "/") index = true
-                                else path = it.path
-                                element = it.page.create()
-                            }
-                        }
-                        Route {
-                            path = "*"
-                            element =
-                                Container.create {
-                                    Typography {
-                                        variant = TypographyVariant.h1
-                                        align = TypographyAlign.center
-                                        +"404 Not Found"
-                                    }
-                                    Typography {
-                                        variant = TypographyVariant.h6
-                                        align = TypographyAlign.center
-                                        +"ページが見つかりませんでした"
-                                    }
+                            if (it.path == "/") {
+                                IndexRoute {
+                                    index = true
+                                    element = it.page.create()
                                 }
+                            } else {
+                                PathRoute {
+                                    path = it.path
+                                    element = it.page.create()
+                                }
+                            }
+
+                        }
+                        PathRoute {
+                            path = "*"
+                            element = Container.create {
+                                Typography {
+                                    variant = TypographyVariant.h1
+                                    align = TypographyAlign.center
+                                    +"404 Not Found"
+                                }
+                                Typography {
+                                    variant = TypographyVariant.h6
+                                    align = TypographyAlign.center
+                                    +"ページが見つかりませんでした"
+                                }
+                            }
+
                         }
                     }
                 }

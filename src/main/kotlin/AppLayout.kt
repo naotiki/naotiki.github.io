@@ -62,12 +62,14 @@ val AppLayout = FC<Props> {
                     }
                 }
                 Button {
-                    onClick = { colorMode.toggle() }
+                    onClick = {
+                        colorMode?.toggle?.invoke()
+                    }
                     color = ButtonColor.inherit
-                    startIcon = if (colorMode.isDarkMode)
+                    startIcon = if (colorMode?.isDarkMode == true)
                         DarkModeOutlined.create()
                     else LightModeOutlined.create()
-                    +if (colorMode.isDarkMode) "Cool" else "目がぁぁぁぁ"
+                    +if (colorMode?.isDarkMode == true) "Cool" else "目がぁぁぁぁ"
                 }
                 Button {
                     href = "https://github.com/naotiki/naotiki.github.io"
@@ -119,11 +121,11 @@ val AppLayout = FC<Props> {
                         }
                     }
                     Tooltip {
-                        title = ReactNode(if (colorMode.isDarkMode) "Cool" else "目がぁぁぁぁ")
+                        title = ReactNode(if (colorMode?.isDarkMode == true) "Cool" else "目がぁぁぁぁ")
                         IconButton {
-                            onClick = { colorMode.toggle() }
+                            onClick = { colorMode?.toggle?.invoke() }
                             color = IconButtonColor.inherit
-                            if (colorMode.isDarkMode)
+                            if (colorMode?.isDarkMode == true)
                                 DarkModeOutlined()
                             else LightModeOutlined()
 
