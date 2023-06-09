@@ -16,9 +16,10 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.footer
 import react.dom.html.ReactHTML.main
 import react.router.Outlet
+import web.cssom.*
 
-val Offset = div.styled { _, theme ->
-    +theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
+val Offset = div.styled {
+    +it.asDynamic().theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
 }
 val AppLayout = FC<Props> {
     var isDrawerOpen by useState(false)
@@ -58,7 +59,7 @@ val AppLayout = FC<Props> {
                 }
                 div{
                     css {
-                        marginTop=Auto.auto
+                        marginTop= Auto.auto
                     }
                 }
                 Button {

@@ -1,5 +1,3 @@
-import csstype.JustifyContent
-import csstype.WhiteSpace
 import mui.icons.material.CalendarMonth
 import mui.icons.material.GitHub
 import mui.icons.material.Group
@@ -12,6 +10,8 @@ import react.FC
 import react.Props
 import react.ReactNode
 import react.create
+import web.cssom.JustifyContent
+import web.cssom.WhiteSpace
 
 val WorksPage = FC<Props> {
     Container {
@@ -69,9 +69,9 @@ val WorksPage = FC<Props> {
                                 startIcon = Launch.create()
                                 +"開く"
                             }
-                            if (it.githubUrl != null) {
+                            if (it.repoUrl != null) {
                                 Button {
-                                    href = it.githubUrl
+                                    href = it.repoUrl
                                     startIcon = GitHub.create()
                                     +"GitHub"
                                 }

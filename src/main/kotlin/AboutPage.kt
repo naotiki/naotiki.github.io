@@ -1,7 +1,3 @@
-import csstype.AlignItems
-import csstype.TextAlign
-import csstype.WhiteSpace
-import csstype.px
 import emotion.react.css
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
@@ -12,6 +8,10 @@ import mui.system.sx
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.div
+import web.cssom.AlignItems
+import web.cssom.TextAlign
+import web.cssom.WhiteSpace
+import web.cssom.px
 import kotlin.js.Date
 import kotlin.math.round
 

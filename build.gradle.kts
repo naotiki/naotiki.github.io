@@ -4,7 +4,7 @@ import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
 plugins {
-    kotlin("js") version "1.8.10"
+    kotlin("js") version "1.8.21"
 }
 
 group = "me.naotiki"
@@ -17,7 +17,7 @@ buildscript {
 repositories {
     mavenCentral()
 }
-val kotlinWrappersVersion = "1.0.0-pre.520"
+val kotlinWrappersVersion = "1.0.0-pre.564"
 fun kotlinw(target:String)="org.jetbrains.kotlin-wrappers:kotlin-$target"
 
 dependencies {

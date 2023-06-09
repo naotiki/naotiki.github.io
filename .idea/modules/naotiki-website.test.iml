@@ -5,12 +5,11 @@
       <configuration version="5" platform="JavaScript " allPlatforms="JS []" useProjectSettings="false" isTestModule="true" externalProjectId="naotiki-website">
         <newMppModelJpsModuleKind>COMPILATION_AND_SOURCE_SET_HOLDER</newMppModelJpsModuleKind>
         <externalSystemTestTasks>
-          <externalSystemTestTask>browserTest|:|js</externalSystemTestTask>
-          <externalSystemTestTask>nodeTest|:|js</externalSystemTestTask>
+          <externalSystemTestTask>browserTest|:|js|js</externalSystemTestTask>
+          <externalSystemTestTask>nodeTest|:|js|js</externalSystemTestTask>
         </externalSystemTestTasks>
-        <testOutputPath>$MODULE_DIR$/../../build/classes/kotlin/test</testOutputPath>
         <compilerSettings>
-          <option name="additionalArguments" value="-Xir-only -Xir-per-module-output-name=naotiki-website-test -Xir-produce-klib-dir -Xir-module-name=me.naotiki:naotiki-website_test" />
+          <option name="additionalArguments" value="-Xir-module-name=me.naotiki:naotiki-website_test -Xir-only -Xir-per-module-output-name=naotiki-website-test -Xir-produce-klib-dir -ir-output-name naotiki-website_test -ir-output-dir $MODULE_DIR$/../../build/classes/kotlin/test" />
         </compilerSettings>
         <compilerArguments>
           <flagArguments>
@@ -21,7 +20,6 @@
           <stringArguments>
             <stringArg name="main" arg="call" />
             <stringArg name="moduleKind" arg="umd" />
-            <stringArg name="outputFile" arg="$MODULE_DIR$/../../build/classes/kotlin/test" />
             <stringArg name="sourceMapEmbedSources" arg="never" />
             <stringArg name="target" arg="v5" />
             <stringArg name="apiVersion" arg="1.8" />

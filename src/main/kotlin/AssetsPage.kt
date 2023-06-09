@@ -1,6 +1,3 @@
-import csstype.AlignItems
-import csstype.TextAlign
-import csstype.px
 import emotion.react.css
 import mui.material.Container
 import mui.material.Link
@@ -13,6 +10,9 @@ import react.FC
 import react.Props
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.img
+import web.cssom.AlignItems
+import web.cssom.TextAlign
+import web.cssom.px
 
 val AssetsPage = FC<Props> {
     Container {
