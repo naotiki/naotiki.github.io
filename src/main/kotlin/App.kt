@@ -59,6 +59,15 @@ val App = FC<Props> {
                             }
 
                         }
+                        works.forEachIndexed { index, it ->
+                            val e= it.createDetail()?: return@forEachIndexed
+                            PathRoute{
+                                path="/works/$index"
+                                element=WorkDetailWrapper.create{
+                                    child(e)
+                                }
+                            }
+                        }
                         PathRoute {
                             path = "*"
                             element = Container.create {

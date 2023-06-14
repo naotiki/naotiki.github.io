@@ -26,7 +26,7 @@ val WorksPage = FC<Props> {
             sx {
                 justifyContent = JustifyContent.flexStart
             }
-            works.forEach {
+            works.forEachIndexed {i,it->
                 Grid {
                     item = true
                     asDynamic().sm = 6
@@ -63,11 +63,17 @@ val WorksPage = FC<Props> {
                             }
                         }
                         CardActions {
-
+                            Button {
+                                component(Link){
+                                    href="/works/$i"
+                                }
+                                startIcon = Launch.create()
+                                +"詳細"
+                            }
                             Button {
                                 href = it.artifactUrl
                                 startIcon = Launch.create()
-                                +"開く"
+                                +"作品を開く"
                             }
                             if (it.repoUrl != null) {
                                 Button {

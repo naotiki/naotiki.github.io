@@ -1,5 +1,6 @@
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
@@ -71,9 +72,10 @@ tasks.named("kotlinNodeJsSetup") {
     doFirst {
         val dir = rootDir.resolve("webpack.config.d")
         dir.mkdir()
-        dir.resolve("webpack.config.js").writeText(
-            "if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}"
-        )
+        val writer=dir.resolve("webpack.config.js").writer()
+        writer.appendLine("if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}")
+        writer.appendLine("config.output.publicPath=\"/\"")
+        writer.flush()
     }
     dependsOn("generateHtml")
 }
@@ -117,7 +119,7 @@ task("generateHtml") {
                 metaProp("twitter:site", "@naotikiKt")
             }
             body {
-                script(src = "naotiki-website.js") {}
+                script(src = "/naotiki-website.js") {}
             }
         }
         appendLine(

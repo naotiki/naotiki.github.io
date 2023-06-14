@@ -17,10 +17,10 @@ File("index.html").bufferedWriter().run {
             title("なおちきです")
         }
         body {
-            script(src = "naotiki-website.js") {}
+            script(src = "/naotiki-website.js") {}
         }
     }
-    appendln(
+    appendLine(
         """
 <!--
 Kotlinで書き切るぜ！！！
