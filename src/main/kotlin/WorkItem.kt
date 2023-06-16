@@ -91,7 +91,23 @@ val works = listOf(
             variant = TypographyVariant.h3
         }
 
-        Carousel()
+        Carousel{
+            CarouselItem {
+                CarouselImg {
+                    src = "https://images.wantedly.com/i/TMzN3hm?w=720"
+                }
+            }
+            CarouselItem {
+                CarouselImg {
+                    src = "https://images.wantedly.com/i/fxmGME9?w=720"
+                }
+            }
+            CarouselItem {
+                CarouselImg {
+                    src = "https://images.wantedly.com/i/ff2eh8h?w=720"
+                }
+            }
+        }
 
     },
     WorkItem(

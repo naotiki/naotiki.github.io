@@ -1,5 +1,6 @@
 import csstype.PropertiesBuilder
 import emotion.react.css
+import emotion.styled.styled
 import js.core.jso
 import mui.icons.material.ArrowBack
 import mui.icons.material.ArrowForward
@@ -11,6 +12,7 @@ import mui.system.sx
 import react.*
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.img
+import usehooks.useWindowSize
 import web.cssom.*
 import web.html.HTMLDivElement
 
@@ -26,7 +28,13 @@ private sealed interface CarouselAction {
     class Add(val key: String) : CarouselAction
     class Remove(val key: String) : CarouselAction
 }
-
+val CarouselImg=img.styled {
+    maxWidth= 100.pct
+    height= Auto.auto
+    display = Display.block
+    marginRight = Auto.auto
+    marginLeft = Auto.auto
+}
 private val carouselReducer: Reducer<CarouselState, CarouselAction> = { a, b ->
     when (b) {
         is CarouselAction.Add -> {
@@ -59,6 +67,7 @@ val Carousel = FC<PropsWithChildren> {
     val reducer = useReducer(carouselReducer, CarouselState())
     val (state, dispatch) = reducer
     val theme= useTheme<Theme>()
+    val windowSize= useWindowSize()
     Box {
         sx {
             position = Position.relative
@@ -93,7 +102,7 @@ val Carousel = FC<PropsWithChildren> {
         }
         Stack {
             ref = stackRef
-            useEffect(state) {
+            useEffect(state,windowSize) {
                 val r = stackRef.current
                 println(state.itemIndex)
                 r?.scrollTo(state.itemIndex * r.clientWidth, 0)
@@ -109,36 +118,7 @@ val Carousel = FC<PropsWithChildren> {
             direction = responsive(StackDirection.row)
             CarouselContext.Provider {
                 value = reducer
-                CarouselItem {
-                    img {
-                        css {
-                            display = Display.block
-                            marginRight = Auto.auto
-                            marginLeft = Auto.auto
-                        }
-                        src = "https://images.wantedly.com/i/TMzN3hm?w=720"
-                    }
-                }
-                CarouselItem {
-                    img {
-                        css {
-                            display = Display.block
-                            marginRight = Auto.auto
-                            marginLeft = Auto.auto
-                        }
-                        src = "https://images.wantedly.com/i/fxmGME9?w=720"
-                    }
-                }
-                CarouselItem {
-                    img {
-                        css {
-                            display = Display.block
-                            marginRight = Auto.auto
-                            marginLeft = Auto.auto
-                        }
-                        src = "https://images.wantedly.com/i/ff2eh8h?w=720"
-                    }
-                }
+                child(it.children)
             }
 
         }
@@ -157,6 +137,10 @@ val Carousel = FC<PropsWithChildren> {
                         height = 20.px
                         background= if (state.itemIndex==index) theme.palette.primary.main else theme.palette.text.primary
                         clipPath= circle()
+                        cursor= Cursor.pointer
+                    }
+                    onClick={
+                        dispatch(CarouselAction.SetIndex(index))
                     }
                 }
             }
