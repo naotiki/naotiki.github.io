@@ -18,7 +18,7 @@ import web.html.HTMLDivElement
 
 private data class CarouselState(
     var itemIndex: Int = 0,
-    val itemList:List<String> = emptyList()
+    val itemList: List<String> = emptyList()
 )
 
 private sealed interface CarouselAction {
@@ -28,9 +28,10 @@ private sealed interface CarouselAction {
     class Add(val key: String) : CarouselAction
     class Remove(val key: String) : CarouselAction
 }
-val CarouselImg=img.styled {
-    maxWidth= 100.pct
-    height= Auto.auto
+
+val CarouselImg = img.styled {
+    maxWidth = 100.pct
+    height = Auto.auto
     display = Display.block
     marginRight = Auto.auto
     marginLeft = Auto.auto
@@ -38,13 +39,16 @@ val CarouselImg=img.styled {
 private val carouselReducer: Reducer<CarouselState, CarouselAction> = { a, b ->
     when (b) {
         is CarouselAction.Add -> {
-            a.copy(itemList = a.itemList+b.key)
+            a.copy(itemList = a.itemList + b.key)
         }
+
         is CarouselAction.Remove -> {
-            val l=a.itemList.toMutableList()
+            val l = a.itemList.toMutableList()
             l.remove(b.key)
-            a.copy(itemIndex = a.itemIndex.coerceIn(l.indices),
-                itemList = l)
+            a.copy(
+                itemIndex = a.itemIndex.coerceIn(l.indices),
+                itemList = l
+            )
         }
 
         is CarouselAction.SetIndex -> {
@@ -66,43 +70,49 @@ val Carousel = FC<PropsWithChildren> {
     val stackRef = createRef<HTMLDivElement>()
     val reducer = useReducer(carouselReducer, CarouselState())
     val (state, dispatch) = reducer
-    val theme= useTheme<Theme>()
-    val windowSize= useWindowSize()
+    val theme = useTheme<Theme>()
+    val windowSize = useWindowSize()
     Box {
         sx {
             position = Position.relative
             overflow = Overflow.hidden
         }
 
-        IconButton {
-            sx {
-                position = Position.absolute
-                left = 20.px
-                top = 50.pct
-                transform = translatey((-50).pct)
+        Tooltip {
+            title = ReactNode("Previous")
+            IconButton {
+                sx {
+                    position = Position.absolute
+                    left = 20.px
+                    top = 50.pct
+                    transform = translatey((-50).pct)
+                }
+                color = IconButtonColor.secondary
+                onClick = {
+                    dispatch(CarouselAction.DecrementIndex)
+                }
+                ArrowBack()
             }
-            color= IconButtonColor.secondary
-            onClick = {
-                dispatch(CarouselAction.DecrementIndex)
-            }
-            ArrowBack()
         }
-        IconButton {
-            sx {
-                position = Position.absolute
-                right = 20.px
-                top = 50.pct
-                transform = translatey( (-50).pct)
+        Tooltip {
+            title = ReactNode("Next")
+            IconButton {
+                sx {
+                    position = Position.absolute
+                    right = 20.px
+                    top = 50.pct
+                    transform = translatey((-50).pct)
+                }
+                color = IconButtonColor.secondary
+                onClick = {
+                    dispatch(CarouselAction.IncrementIndex)
+                }
+                ArrowForward()
             }
-            color= IconButtonColor.secondary
-            onClick = {
-                dispatch(CarouselAction.IncrementIndex)
-            }
-            ArrowForward()
         }
         Stack {
             ref = stackRef
-            useEffect(state,windowSize) {
+            useEffect(state, windowSize) {
                 val r = stackRef.current
                 println(state.itemIndex)
                 r?.scrollTo(state.itemIndex * r.clientWidth, 0)
@@ -123,23 +133,24 @@ val Carousel = FC<PropsWithChildren> {
 
         }
         Stack {
-            spacing= responsive(2)
+            spacing = responsive(2)
             sx {
-                marginTop=10.px
-                justifyContent= JustifyContent.center
+                marginTop = 10.px
+                justifyContent = JustifyContent.center
             }
             direction = responsive(StackDirection.row)
             state.itemList.forEachIndexed { index, str ->
                 div {
-                    key=str+index
+                    key = str + index
                     css {
                         width = 20.px
                         height = 20.px
-                        background= if (state.itemIndex==index) theme.palette.primary.main else theme.palette.text.primary
-                        clipPath= circle()
-                        cursor= Cursor.pointer
+                        background =
+                            if (state.itemIndex == index) theme.palette.primary.main else theme.palette.text.primary
+                        clipPath = circle()
+                        cursor = Cursor.pointer
                     }
-                    onClick={
+                    onClick = {
                         dispatch(CarouselAction.SetIndex(index))
                     }
                 }
