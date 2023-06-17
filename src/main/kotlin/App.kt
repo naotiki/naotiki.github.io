@@ -1,3 +1,4 @@
+import js.core.globalThis
 import js.core.jso
 import mui.material.*
 import mui.material.styles.ThemeProvider
@@ -14,7 +15,6 @@ import usehooks.UseDarkModeOutput
 import usehooks.useDarkMode
 
 val DarkModeContext = createContext<UseDarkModeOutput>()
-
 
 enum class Pages(
     val page: ElementType<Props>, val path: String = "/", private val routeName: String? = null
@@ -34,6 +34,7 @@ val App = FC<Props> {
                 palette = jso {
                     mode = if (darkModeOutput.isDarkMode) PaletteMode.dark
                     else PaletteMode.light
+
                 }
             })
         }
@@ -57,13 +58,12 @@ val App = FC<Props> {
                                     element = it.page.create()
                                 }
                             }
-
                         }
-                        works.forEachIndexed { index, it ->
-                            val e= it.createDetail()?: return@forEachIndexed
-                            PathRoute{
-                                path="/works/$index"
-                                element=WorkDetailWrapper.create{
+                        works.forEach { it ->
+                            val e = it.createDetail() ?: return@forEach
+                            PathRoute {
+                                path = "/works/${it.itemUrlComponent}"
+                                element = WorkDetailWrapper.create {
                                     child(e)
                                 }
                             }
@@ -81,6 +81,7 @@ val App = FC<Props> {
                                     align = TypographyAlign.center
                                     +"ページが見つかりませんでした"
                                 }
+
                             }
 
                         }
