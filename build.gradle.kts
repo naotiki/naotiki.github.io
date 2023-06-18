@@ -80,12 +80,12 @@ tasks.named("kotlinNodeJsSetup") {
     dependsOn("generateHtml")
 }
 // GitHub Pages 用に404をコピー
-tasks.build{
+/*tasks.build{
     doLast {
         val dist = buildDir.resolve("distributions").toPath()
         Files.copy(dist.resolve("index.html"), dist.resolve("404.html"),StandardCopyOption.REPLACE_EXISTING)
     }
-}
+}*/
 
 task("generateHtml") {
     fun FlowOrPhrasingOrMetaDataContent.metaProp(prop: String, content: String) = meta {
