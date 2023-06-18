@@ -1,8 +1,6 @@
 import emotion.react.css
-import mui.material.Container
-import mui.material.Link
-import mui.material.Stack
-import mui.material.StackDirection
+import mui.material.*
+import mui.material.styles.TypographyVariant
 import mui.system.Breakpoint
 import mui.system.responsive
 import mui.system.sx
@@ -16,17 +14,25 @@ import web.cssom.px
 
 val AssetsPage = FC<Props> {
     Container {
-
+        Typography{
+            variant= TypographyVariant.h1
+            sx{
+                textAlign= TextAlign.center
+            }
+            +"Work In Progress..."
+        }
         CCBySA()
     }
 
 }
 
 val CCBySA = FC<Props> {
+
     Stack {
         direction = responsive(Breakpoint.xs to StackDirection.column, Breakpoint.sm to StackDirection.row)
         spacing = responsive(2)
         sx { alignItems = AlignItems.center }
+
         Link {
             rel = "license"
             href = "https://creativecommons.org/licenses/by/4.0/"

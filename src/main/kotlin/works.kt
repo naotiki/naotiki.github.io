@@ -101,7 +101,7 @@ val works = listOf(
             Attribute.Award("Kloudハッカソン#2 参加者投票賞")
         ),
         null,
-        null,
+        "https://github.com/naotiki/chiiugo",
         "/images/works/chiiugo/1.png"
     ) {
         DetailHeader {

@@ -1,3 +1,4 @@
+import components.NewTabAnchor
 import csstype.*
 import emotion.react.css
 import emotion.styled.styled
@@ -11,6 +12,7 @@ import mui.system.Breakpoint
 import mui.system.Theme
 import mui.system.responsive
 import mui.system.sx
+import mui.types.PropsWithComponent
 import react.*
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.footer
@@ -73,7 +75,9 @@ val AppLayout = FC<Props> {
                     +if (colorMode?.isDarkMode == true) "Cool" else "目がぁぁぁぁ"
                 }
                 Button {
-                    href = "https://github.com/naotiki/naotiki.github.io"
+                    component(NewTabAnchor){
+                        href = "https://github.com/naotiki/naotiki.github.io"
+                    }
                     GitHub()
                     +"naotiki/naotiki.github.io"
                 }
@@ -139,7 +143,11 @@ val AppLayout = FC<Props> {
                     Tooltip {
                         title = ReactNode("naotiki/naotiki.github.io")
                         IconButton {
-                            asDynamic().href = "https://github.com/naotiki/naotiki.github.io"
+                            unsafeProps<PropsWithComponent> {
+                                component(NewTabAnchor){
+                                    href = "https://github.com/naotiki/naotiki.github.io"
+                                }
+                            }
                             GitHub {
                                 sx { verticalAlign = VerticalAlign.middle }
                             }

@@ -1,3 +1,4 @@
+import components.NewTabAnchor
 import emotion.react.css
 import emotion.styled.styled
 import mui.icons.material.*
@@ -30,7 +31,7 @@ val WorksPage = FC<Props> {
             }
             variant = TypographyVariant.h4
             align = TypographyAlign.center
-            +"今までに作ったもの"
+            +"Works"
         }
         Grid {
             container = true
@@ -160,15 +161,21 @@ val WorkCard= FC<WorkItemProps> {
                 }
                 if (it.workItem.artifactUrl != null) {
                     Button {
-                        href = it.workItem.artifactUrl
+                        component(NewTabAnchor){
+                            href = it.workItem.artifactUrl
+                        }
                         startIcon = Launch.create()
                         +"作品を開く"
                     }
                 }
                 if (it.workItem.repoUrl != null) {
                     IconButton {
+                        unsafeProps<PropsWithComponent> {
+                            component(NewTabAnchor){
+                                href = it.workItem.repoUrl
+                            }
+                        }
                         color = IconButtonColor.primary
-                        asDynamic().href = it.workItem.repoUrl
                         GitHub()
                     }
                 }
