@@ -1,20 +1,19 @@
-import csstype.PropertiesBuilder
 import emotion.react.css
 import emotion.styled.styled
-import js.core.jso
 import mui.icons.material.ArrowBack
 import mui.icons.material.ArrowForward
 import mui.material.*
 import mui.material.styles.Theme
 import mui.material.styles.useTheme
 import mui.system.PropsWithSx
-import mui.system.SxProps
 import mui.system.responsive
 import mui.system.sx
 import react.*
 import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.img
 import usehooks.useWindowSize
+import utils.nextIndexWithLoop
+import utils.previousIndexWithLoop
 import web.cssom.*
 import web.html.HTMLDivElement
 
@@ -59,11 +58,11 @@ private val carouselReducer: Reducer<CarouselState, CarouselAction> = { a, b ->
         }
 
         CarouselAction.DecrementIndex -> {
-            a.copy(itemIndex = (a.itemIndex - 1).coerceIn(a.itemList.indices))
+            a.copy(itemIndex = a.itemList.previousIndexWithLoop(a.itemIndex))
         }
 
         CarouselAction.IncrementIndex -> {
-            a.copy(itemIndex = (a.itemIndex + 1).coerceIn(a.itemList.indices))
+            a.copy(itemIndex = a.itemList.nextIndexWithLoop(a.itemIndex))
         }
     }
 }
