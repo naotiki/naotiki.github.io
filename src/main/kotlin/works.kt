@@ -20,73 +20,6 @@ import react.dom.html.ReactHTML.div
 import web.cssom.*
 import web.cssom.LineStyle
 
-/*
-*
-/* インライン #100 | http://localhost:8080/works/easy%20shell%20environment */
-
-.css-uwwqev {
-  /* width: 100%; */
-  /* height: 100%; */
-  height: 100%;
-  width: auto;
-}
-
-/* 要素 | http://localhost:8080/works/easy%20shell%20environment */
-
-.MuiGrid-container {
-  height: 50vh;
-}
-
-/* 要素 | http://localhost:8080/works/easy%20shell%20environment */
-
-.css-3nth92-MuiStack-root {
-  height: 100%;
-}
-
-/* インライン #99 | http://localhost:8080/works/easy%20shell%20environment */
-
-.css-1xifj1j {
-  /* max-height: 100%; */
-  height: 100%;
-  overflow: hidden;
-}
-
-/* 要素 | http://localhost:8080/works/easy%20shell%20environment */
-
-div.MuiGrid-item:nth-child(2) {
-  height: 95%;
-}
-
-/* インライン #120 | http://localhost:8080/works/easy%20shell%20environment */
-
-@media (min-width: 1536px) {
-  .css-13shxg4-MuiGrid-root {
-    /* flex-grow: 0; */
-    flex-grow: 1;
-  }
-}
-
-/* 要素 | http://localhost:8080/works/easy%20shell%20environment */
-
-div.MuiGrid-root:nth-child(4) {
-  height: 5%;
-}
-
-/* インライン #215 | http://localhost:8080/works/easy%20shell%20environment */
-
-.css-1erifib {
-  /* width: 20px; */
-  /* height: 20px; */
-  width: 100%;
-  height: auto;
-}
-
-/* 要素 | http://localhost:8080/works/easy%20shell%20environment */
-
-.css-1wuyogk-MuiStack-root {
-  height: 100%;
-}
-*/
 @OptIn(ExperimentalDangerousRawHTML::class)
 val works = listOf(
     WorkItem(
@@ -108,15 +41,24 @@ val works = listOf(
             +it
         }
         Carousel {
+            sx {
+                height = 50.vh
+            }
             CarouselItem {
                 dangerousRawHtml {
                     sx {
                         maxWidth = 100.pct
-                        maxHeight = 100.pct
-                        width = 50.vw
+                        margin=Auto.auto
+                        height=100.pct
+                        textAlign= TextAlign.center
                     }
                     rawHtml =
-                        """<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/417741acf2a948d48adc3dc5d170135e" title="ちぃうご" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: 0px; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: 100%; height: auto; aspect-ratio: 560 / 314;" data-ratio="1.78343949044586"></iframe>"""
+                        """<iframe class="speakerdeck-iframe" frameborder="0" src="https://speakerdeck.com/player/417741acf2a948d48adc3dc5d170135e" title="ちぃうご" allowfullscreen="true" style="border: 0px; background: padding-box padding-box rgba(0, 0, 0, 0.1); margin: auto; padding: 0px; border-radius: 6px; box-shadow: rgba(0, 0, 0, 0.2) 0px 5px 40px; width: auto; height: 100%; aspect-ratio: 560/314;" data-ratio="1.78343949044586"></iframe>"""
+                }
+            }
+            CarouselItem{
+                CarouselImg{
+                    src="/images/works/chiiugo/1.png"
                 }
             }
         }
