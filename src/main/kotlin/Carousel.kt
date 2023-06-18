@@ -69,7 +69,9 @@ private val carouselReducer: Reducer<CarouselState, CarouselAction> = { a, b ->
 }
 private val CarouselContext = createContext<ReducerInstance<CarouselState, CarouselAction>>()
 
-external interface CarouselProps : PropsWithChildren, PropsWithSx
+external interface CarouselProps : PropsWithChildren, PropsWithSx{
+    var smoothScroll:Boolean?
+}
 
 val Carousel = FC<CarouselProps> {
 
@@ -112,7 +114,8 @@ val Carousel = FC<CarouselProps> {
                 r?.scrollTo(state.itemIndex * r.clientWidth, 0)
             }
             sx {
-                overflowX = Overflow.hidden//scroll
+                overflowX = Overflow.hidden//.scroll
+                scrollBehavior= if(it.smoothScroll != false)ScrollBehavior.smooth else Auto.auto
                 alignItems = AlignItems.center
                 height = 100.pct
                 /* width = 100.pct

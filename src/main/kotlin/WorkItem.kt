@@ -1,8 +1,5 @@
-import js.uri.encodeURIComponent
 import kotlinx.datetime.LocalDate
-import mui.icons.material.Android
 import mui.icons.material.Computer
-import mui.icons.material.Web
 import mui.material.*
 import react.*
 
@@ -18,30 +15,29 @@ external interface WorkItemProps : Props {
 }
 sealed class Attribute(val order:Int){
     //EmojiEvents
-    class Awarded(val name:String):Attribute(0)
+    data class Award(val name:String):Attribute(0)
     object JointDevelopment:Attribute(1)
-    class Platform(val platform: Platforms):Attribute(2)
-    class Technology(val name:String):Attribute(3)
-
+    data class Platform(val platform: Platforms):Attribute(2)
+    data class Stack(val name: String):Attribute(3)
 }
 data class WorkItem(
     val name: String,
     val description: String,
     val update: LocalDate,
-    private val attributes:List<Attribute> = emptyList(),
+    private val attributes:Set<Attribute> = emptySet(),
     val artifactUrl: String?=null,
     val repoUrl: String? = null,
     val thumbnailUrl:String?=null,
     private val detailPage: ComponentType<WorkItemProps>? = null
 ) {
-    val sortedAttributes=attributes.sortedBy { it.order }
+    val sortedAttributes=attributes.sortedBy { it.order }.toSet()
     val hasDetailPage get() = detailPage!=null
-    val itemUrlComponent= name.lowercase()
+    val itemUrlComponent= name.lowercase().replace(" ","_")
     constructor(
         name: String,
         description: String,
         update: LocalDate,
-        attributes:List<Attribute> = emptyList(),
+        attributes:Set<Attribute> = emptySet(),
         artifactUrl: String?=null,
         repoUrl: String? = null,
         thumbnailUrl:String?=null,

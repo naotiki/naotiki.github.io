@@ -9,6 +9,7 @@ import mui.material.styles.TypographyVariant
 import mui.material.styles.useTheme
 import mui.system.responsive
 import mui.system.sx
+import mui.types.PropsWithComponent
 import react.FC
 import react.Props
 import react.ReactNode
@@ -48,7 +49,7 @@ val WorksPage = FC<Props> {
                             height = 100.pct
                             if (it.thumbnailUrl != null) {
                                 backgroundImage = url(it.thumbnailUrl)
-                                backgroundSize= BackgroundSize.cover
+                                backgroundSize = BackgroundSize.cover
                                 backgroundColor = if (theme.palette.mode == PaletteMode.dark) {
                                     rgb(0, 0, 0, 0.7)
                                 } else rgb(255, 255, 255, 0.7)
@@ -70,61 +71,72 @@ val WorksPage = FC<Props> {
                                     backgroundColor = rgb(0, 0, 0, 0.0)
                                     backdropFilter = blur(2.px)
                                 }
+                          //      justifyContent= JustifyContent.spaceBetween
                             }
 
-                            CardHeader {
-                                title = ReactNode(it.name)
-                                subheader = ReactNode(it.update.toString())
-                            }
-
-                            CardContent {
-                                component(Stack) {
-                                    spacing = responsive(1)
+                            CardActionArea {
+                                unsafeProps<PropsWithComponent> {
+                                    component(Link) {
+                                        href = "/works/${it.itemUrlComponent}"
+                                    }
+                                }
+                                sx {
+                                    flexGrow=1.asDynamic()
+                                }
+                                CardHeader {
+                                    title = ReactNode(it.name)
+                                    subheader = ReactNode(it.update.toString())
                                 }
 
-
-                                Stack {
-                                    direction = responsive(StackDirection.row)
-                                    spacing = responsive(1)
-                                    asDynamic().useFlexGap = true
-                                    sx {
-                                        flexWrap = FlexWrap.wrap
+                                CardContent {
+                                    component(Stack) {
+                                        spacing = responsive(1)
                                     }
-                                    it.sortedAttributes.forEach {
-                                        Chip {
-                                            size = Size.small
 
-                                            when (it) {
-                                                is Attribute.Awarded -> {
-                                                    label = ReactNode(it.name)
-                                                    icon = EmojiEvents.create()
+
+                                    Stack {
+                                        direction = responsive(StackDirection.row)
+                                        spacing = responsive(1)
+                                        asDynamic().useFlexGap = true
+                                        sx {
+                                            flexWrap = FlexWrap.wrap
+                                        }
+                                        it.sortedAttributes.forEach {
+                                            Chip {
+                                                size = Size.small
+
+                                                when (it) {
+                                                    is Attribute.Award -> {
+                                                        label = ReactNode(it.name)
+                                                        icon = EmojiEvents.create()
+                                                    }
+
+                                                    Attribute.JointDevelopment -> {
+                                                        label = ReactNode("共同開発")
+                                                        icon = Group.create()
+                                                    }
+
+                                                    is Attribute.Platform -> {
+                                                        label = ReactNode(it.platform.name)
+                                                        icon = it.platform.icon.create()
+                                                    }
+
+                                                    is Attribute.Stack -> TODO()
                                                 }
-
-                                                Attribute.JointDevelopment -> {
-                                                    label = ReactNode("共同開発")
-                                                    icon = Group.create()
-                                                }
-
-                                                is Attribute.Platform -> {
-                                                    label = ReactNode(it.platform.name)
-                                                    icon = it.platform.icon.create()
-                                                }
-
-                                                is Attribute.Technology -> TODO()
                                             }
                                         }
                                     }
-                                }
-                                Typography {
-                                    variant = TypographyVariant.body2
-                                    sx {
-                                        color = theme.palette.text.secondary
-                                        whiteSpace = WhiteSpace.preWrap
+                                    Typography {
+                                        variant = TypographyVariant.body2
+                                        sx {
+                                            color = theme.palette.text.secondary
+                                            whiteSpace = WhiteSpace.preWrap
+                                        }
+                                        +it.description
                                     }
-                                    +it.description
                                 }
+                                flexSpacer()
                             }
-                            flexSpacer()
                             CardActions {
                                 if (it.hasDetailPage) {
                                     Button {
@@ -143,10 +155,10 @@ val WorksPage = FC<Props> {
                                     }
                                 }
                                 if (it.repoUrl != null) {
-                                    Button {
-                                        href = it.repoUrl
-                                        startIcon = GitHub.create()
-                                        +"GitHub"
+                                    IconButton {
+                                        color = IconButtonColor.primary
+                                        asDynamic().href = it.repoUrl
+                                        GitHub()
                                     }
                                 }
                             }
