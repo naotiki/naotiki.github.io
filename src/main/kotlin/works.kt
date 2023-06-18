@@ -35,7 +35,7 @@ val works = listOf(
         ),
         null,
         "https://github.com/naotiki/chiiugo",
-        "/images/works/chiiugo/1.png"
+        "/images/works/chiiugo/1.webp"
     ) {
         DetailHeader {
             +it
@@ -58,7 +58,7 @@ val works = listOf(
             }
             CarouselItem{
                 CarouselImg{
-                    src="/images/works/chiiugo/1.png"
+                    src="/images/works/chiiugo/1.webp"
                 }
             }
         }
@@ -77,7 +77,7 @@ val works = listOf(
         ),
         "https://ese.naotiki.me",
         "https://github.com/naotiki/Ese",
-        "/images/works/ese/1.png"
+        "/images/works/ese/1.webp"
     ) {
         DetailHeader {
             +it
@@ -88,22 +88,22 @@ val works = listOf(
             }
             CarouselItem {
                 CarouselImg {
-                    src = "/images/works/ese/1.png"
+                    src = "/images/works/ese/1.webp"
                 }
             }
             CarouselItem {
                 CarouselImg {
-                    src = "/images/works/ese/2.png"
+                    src = "/images/works/ese/2.webp"
                 }
             }
             CarouselItem {
                 CarouselImg {
-                    src = "/images/works/ese/3.png"
+                    src = "/images/works/ese/3.webp"
                 }
             }
             CarouselItem {
                 CarouselImg {
-                    src = "/images/works/ese/4.png"
+                    src = "/images/works/ese/4.webp"
                 }
             }
         }
