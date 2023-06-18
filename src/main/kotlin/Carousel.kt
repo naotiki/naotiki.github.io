@@ -84,6 +84,7 @@ val Carousel = FC<CarouselProps> {
         direction = responsive(StackDirection.row)
         sx {
             // position = Position.relative
+            margin=Auto.auto
             overflow = Overflow.hidden
             +it.sx
         }
@@ -196,7 +197,7 @@ val CarouselItem =
             div{
                 css {
                     display= Display.block
-                    width=Length.fitContent
+                    width=Auto.auto//Length.fitContent
                     margin=Auto.auto
                     height = 100.pct
                 }

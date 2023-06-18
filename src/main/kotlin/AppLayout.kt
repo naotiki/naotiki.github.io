@@ -42,7 +42,7 @@ val AppLayout = FC<Props> {
                 }
                 List {
                     ListItem {
-                        +"Naotiki/"
+                        +"naotiki.me/"
                     }
                     Pages.values().forEach {
                         ListItem {
@@ -79,16 +79,40 @@ val AppLayout = FC<Props> {
                 }
             }
         }
-        Fab {
-            sx {
-                position = Position.absolute
-                top = 16.px
-                left = 16.px
+        Stack{
+            direction= responsive(StackDirection.row)
+            sx{
+                alignItems= AlignItems.center
+                margin= Margin(10.px,Auto.auto)
             }
-            onClick = {
-                isDrawerOpen = true
+            div{
+                css{
+                    width=0.px
+                }
+                Fab {
+                    sx {
+                         position = Position.relative
+                        left=16.px
+                         /*top = 16.px
+                         left = 16.px*/
+
+                    }
+                    onClick = {
+                        isDrawerOpen = true
+                    }
+                    Menu()
+                }
             }
-            Menu()
+
+            Typography {
+                variant = TypographyVariant.h4
+                component = div
+                sx {
+                    textAlign= TextAlign.center
+                    flexGrow = 1.asDynamic()
+                }
+                +"naotiki.me"
+            }
         }
     } else {
         AppBar {
@@ -136,8 +160,8 @@ val AppLayout = FC<Props> {
             }
 
         }
+        Offset()
     }
-    Offset()
     main {
         //ページが挿入される
         Outlet()

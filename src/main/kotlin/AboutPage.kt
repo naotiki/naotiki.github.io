@@ -2,19 +2,18 @@ import emotion.react.css
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
 import mui.material.*
+import mui.material.Size
 import mui.material.styles.TypographyVariant
+import mui.system.Breakpoint
 import mui.system.responsive
 import mui.system.sx
 import react.FC
 import react.Props
 import react.dom.html.ReactHTML.div
-import web.cssom.AlignItems
-import web.cssom.TextAlign
-import web.cssom.WhiteSpace
-import web.cssom.px
+import react.dom.html.ReactHTML.iframe
+import web.cssom.*
 import kotlin.js.Date
 import kotlin.math.round
-
 
 
 val AboutPage = FC<Props> {
@@ -68,8 +67,27 @@ val AboutPage = FC<Props> {
             sx {
                 whiteSpace = WhiteSpace.preWrap
             }
-            +"Kotlinが大好きな高専生です。\n"
-            +"約${calcBirthday()}歳です。"
+            +"""
+                Kotlinが大好きな高専生です。
+                Kotlin/JSやKotlin/Wasmなどで遊んでいます。
+                Compose Multiplatformが大好き。
+                """.trimIndent()
+        }
+        Typography {
+            variant = TypographyVariant.h4
+            +"Works"
+        }
+        Container{
+            maxWidth=Breakpoint.sm
+            Carousel {
+                works.forEach {
+                    CarouselItem {
+                        WorkCard {
+                            workItem = it
+                        }
+                    }
+                }
+            }
         }
 
     }
@@ -77,6 +95,8 @@ val AboutPage = FC<Props> {
 
 fun calcBirthday(today: Double = Date.now()): Double {
     val now = Date(today)
-    return round((((now.getFullYear() - 2006.0) + ((now.getMonth() - 8.0) / 12.0) + ((now.getDate() - 30.0) / 30.0 /
-            12.0)))*10000.0)/10000.0
+    return round(
+        (((now.getFullYear() - 2006.0) + ((now.getMonth() - 8.0) / 12.0) + ((now.getDate() - 30.0) / 30.0 /
+                12.0))) * 10000.0
+    ) / 10000.0
 }
