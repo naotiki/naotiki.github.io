@@ -11,11 +11,12 @@ import react.dom.html.ReactHTML.img
 import web.cssom.AlignItems
 import web.cssom.TextAlign
 import web.cssom.px
+import web.cssom.vw
 
 val AssetsPage = FC<Props> {
     Container {
         Typography{
-            variant= TypographyVariant.h1
+            variant= TypographyVariant.h2
             sx{
                 textAlign= TextAlign.center
             }

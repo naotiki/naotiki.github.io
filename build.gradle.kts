@@ -1,6 +1,13 @@
 import kotlinx.html.*
 import kotlinx.html.stream.appendHTML
+import org.jetbrains.kotlin.gradle.plugin.KotlinJsCompilerType
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJsCompilation
+import org.jetbrains.kotlin.gradle.plugin.mpp.KotlinJsCompilationFactory
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpack
+import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackConfig
 import org.jetbrains.kotlin.gradle.targets.js.webpack.KotlinWebpackOutput
+import org.jetbrains.kotlin.gradle.targets.js.webpack.WebpackDevtool
+import org.jetbrains.kotlin.ir.util.kotlinPackageFqn
 import java.nio.file.Files
 import java.nio.file.StandardCopyOption
 
@@ -19,7 +26,7 @@ repositories {
     mavenCentral()
 }
 val kotlinWrappersVersion = "1.0.0-pre.564"
-fun kotlinw(target:String)="org.jetbrains.kotlin-wrappers:kotlin-$target"
+fun kotlinw(target: String) = "org.jetbrains.kotlin-wrappers:kotlin-$target"
 
 dependencies {
     //wrappers
@@ -36,94 +43,102 @@ dependencies {
     implementation(npm("usehooks-ts", "2.8.0"))
     //others...
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.4.0")
-
+    implementation("org.jetbrains.kotlinx:kotlinx-html-js:0.8.0")
     testImplementation(kotlin("test-js"))
 }
 kotlin {
+
     js(IR) {
         binaries.executable()
         browser {
+            webpackTask {
+                println(mode)
+                if(mode==KotlinWebpackConfig.Mode.PRODUCTION){
+                    sourceMaps=false
+                }
+            }
             commonWebpackConfig {
                 cssSupport {
                     enabled.set(true)
                 }
             }
+
+
             /*dceTask {
                 dceOptions.devMode = true
             }*/
-        }
-        nodejs {
-            testTask {
-                useMocha()
+            nodejs {
+                testTask {
+                    useMocha()
+                }
             }
         }
     }
-}
-rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
-    rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().run {
-        download = true // default
-        nodeVersion = "16.15.0" // usehooks-ts require nodeVersion >=16.15.0
+    rootProject.plugins.withType<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootPlugin> {
+        rootProject.the<org.jetbrains.kotlin.gradle.targets.js.nodejs.NodeJsRootExtension>().run {
+            download = true // default
+            nodeVersion = "16.15.0" // usehooks-ts require nodeVersion >=16.15.0
+        }
     }
-}
 
 
 // これはJavaScriptではなくただの文字列をファイルに書き込んでいるだけです。なのでKotlin100%
-tasks.named("kotlinNodeJsSetup") {
-    doFirst {
-        val dir = rootDir.resolve("webpack.config.d")
-        dir.mkdir()
-        val writer=dir.resolve("webpack.config.js").writer()
-        writer.appendLine("if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}")
-        writer.appendLine("config.output.publicPath=\"/\"")
-        writer.flush()
-    }
-    dependsOn("generateHtml")
-}
-// GitHub Pages 用に404をコピー
-/*tasks.build{
-    doLast {
-        val dist = buildDir.resolve("distributions").toPath()
-        Files.copy(dist.resolve("index.html"), dist.resolve("404.html"),StandardCopyOption.REPLACE_EXISTING)
-    }
-}*/
-
-task("generateHtml") {
-    fun FlowOrPhrasingOrMetaDataContent.metaProp(prop: String, content: String) = meta {
-        attributes["property"] = prop
-        this.content = content
-    }
-    File("src/main/resources/index.html").bufferedWriter().run {
-        appendLine("<!DOCTYPE html>")
-        appendHTML().html {
-            lang = "ja"
-            head {
-                attributes["prefix"] = "og: https://ogp.me/ns#"
-                meta(charset = "UTF-8")
-                meta(
-                    "viewport",
-                    content = "initial-scale=1, width=device-width"
-                )
-                link("https://naotiki.me", "canonical")
-                link("/favicon.ico", "icon")
-                link("/naotiki.svg", "icon", "image/svg+xml")
-                metaProp("og:site_name", "なおちきのポートフォリオ")
-                title("なおちきです")
-                metaProp("og:title", "なおちきです")
-                meta("author", "なおちき")
-                meta("description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
-                metaProp("og:description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
-                metaProp("og:image", "https://r2.naotiki.me/NAOTIKI.png")
-                metaProp("og:url", "https://naotiki.me")
-                metaProp("og:type", "website")
-                metaProp("twitter:card", "summary_large_image")
-                metaProp("twitter:site", "@naotikiKt")
-            }
-            body {
-                script(src = "/naotiki-website.js") {}
-            }
+    tasks.named("kotlinNodeJsSetup") {
+        doFirst {
+            val dir = rootDir.resolve("webpack.config.d")
+            dir.mkdir()
+            val writer = dir.resolve("webpack.config.js").writer()
+            writer.appendLine("if (config.devServer){config.devServer=Object.assign(config.devServer,{historyApiFallback:true});}")
+            writer.appendLine("config.output.publicPath=\"/\"")
+            writer.flush()
         }
-        appendLine(
-            """
+        dependsOn("generateHtml")
+    }
+// GitHub Pages 用に404をコピー
+    /*tasks.build{
+        doLast {
+            val dist = buildDir.resolve("distributions").toPath()
+            Files.copy(dist.resolve("index.html"), dist.resolve("404.html"),StandardCopyOption.REPLACE_EXISTING)
+        }
+    }*/
+
+    task("generateHtml") {
+        fun FlowOrPhrasingOrMetaDataContent.metaProp(prop: String, content: String) = meta {
+            attributes["property"] = prop
+            this.content = content
+        }
+        File("src/main/resources/index.html").bufferedWriter().run {
+            appendLine("<!DOCTYPE html>")
+            appendHTML().html {
+                lang = "ja"
+                head {
+                    attributes["prefix"] = "og: https://ogp.me/ns#"
+                    meta(charset = "UTF-8")
+                    meta(
+                        "viewport",
+                        content = "initial-scale=1, width=device-width"
+                    )
+                    link("https://naotiki.me", "canonical")
+                    link("/favicon.ico", "icon")
+                    link("/naotiki.svg", "icon", "image/svg+xml")
+                    metaProp("og:site_name", "なおちきのポートフォリオ")
+                    title("なおちきです")
+                    metaProp("og:title", "なおちきです")
+                    meta("author", "なおちき")
+                    meta("description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
+                    metaProp("og:description", "Kotlin/JSで書かれたなおちきのポートフォリオです。")
+                    metaProp("og:image", "https://r2.naotiki.me/NAOTIKI.png")
+                    metaProp("og:url", "https://naotiki.me")
+                    metaProp("og:type", "website")
+                    metaProp("twitter:card", "summary_large_image")
+                    metaProp("twitter:site", "@naotikiKt")
+                }
+                body {
+                    script(src = "/naotiki-website.js") {}
+                }
+            }
+            appendLine(
+                """
 <!--
 Kotlinで書き切るぜ！！！
             \/
@@ -181,9 +196,10 @@ MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 MMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMMM
 -->
 """
-        )
-        flush()
-        close()
+            )
+            flush()
+            close()
+        }
     }
-}
 
+}

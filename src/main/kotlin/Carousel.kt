@@ -1,5 +1,8 @@
+import components.ExperimentalDangerousRawHTML
+import components.dangerousRawHtml
 import emotion.react.css
 import emotion.styled.styled
+import js.core.jso
 import mui.icons.material.ArrowBack
 import mui.icons.material.ArrowForward
 import mui.material.*
@@ -79,106 +82,116 @@ val Carousel = FC<CarouselProps> {
     val (state, dispatch) = reducer
     val theme = useTheme<Theme>()
     val windowSize = useWindowSize()
-    Stack {
-        direction = responsive(StackDirection.row)
-        sx {
-            // position = Position.relative
-            margin=Auto.auto
-            overflow = Overflow.hidden
+    Container{
+        sx{
+            display= Display.inlineFlex
+            flexDirection= FlexDirection.column
+            margin= Margin(20.px,Auto.auto)
             +it.sx
         }
-        Tooltip {
-            title = ReactNode("Previous")
-            IconButton {
+        Stack {
+            direction = responsive(StackDirection.row)
+            sx {
+                // position = Position.relative
+                width=100.pct
+                margin=Auto.auto
+                overflow = Overflow.hidden
+                height=100.pct
+            }
+            Tooltip {
+                title = ReactNode("Previous")
+                IconButton {
+                    sx {
+                        //   position = Position.absolute
+                        /*   left = 20.px
+                           top = 50.pct
+                           transform = translatey((-50).pct)*/
+                        margin=Auto.auto
+                        height = Length.fitContent
+                    }
+                    color = IconButtonColor.secondary
+                    onClick = {
+                        dispatch(CarouselAction.DecrementIndex)
+                    }
+                    ArrowBack()
+                }
+            }
+
+            Stack {
+                ref = stackRef
+                useEffect(state, windowSize) {
+                    val r = stackRef.current
+                    println(state.itemIndex)
+                    r?.scrollTo(state.itemIndex * r.clientWidth, 0)
+                }
                 sx {
-                    //   position = Position.absolute
-                    /*   left = 20.px
-                       top = 50.pct
-                       transform = translatey((-50).pct)*/
-                    margin=Auto.auto
-                    height = Length.fitContent
+                    overflowX = Overflow.hidden//.scroll
+                    scrollBehavior= if(it.smoothScroll != false)ScrollBehavior.smooth else Auto.auto
+                    alignItems = AlignItems.stretch
+                    height = 100.pct
+                    flexGrow=1.asDynamic()
+                    /* width = 100.pct
+                     height=100.pct*/
                 }
-                color = IconButtonColor.secondary
-                onClick = {
-                    dispatch(CarouselAction.DecrementIndex)
+                direction = responsive(StackDirection.row)
+                CarouselContext.Provider {
+                    value = reducer
+                    child(it.children)
                 }
-                ArrowBack()
+
+            }
+
+
+            Tooltip {
+                title = ReactNode("Next")
+                IconButton {
+                    sx {
+                        margin=Auto.auto
+                        height = Length.fitContent
+                        //  position = Position.absolute
+                        /*right = 20.px
+                        top = 50.pct
+                        transform = translatey((-50).pct)*/
+                    }
+                    color = IconButtonColor.secondary
+                    onClick = {
+                        dispatch(CarouselAction.IncrementIndex)
+                    }
+                    ArrowForward()
+                }
             }
         }
 
         Stack {
-            ref = stackRef
-            useEffect(state, windowSize) {
-                val r = stackRef.current
-                println(state.itemIndex)
-                r?.scrollTo(state.itemIndex * r.clientWidth, 0)
-            }
+            spacing = responsive(2)
             sx {
-                overflowX = Overflow.hidden//.scroll
-                scrollBehavior= if(it.smoothScroll != false)ScrollBehavior.smooth else Auto.auto
-                alignItems = AlignItems.center
-                height = 100.pct
-                /* width = 100.pct
-                 height=100.pct*/
+                marginTop = 10.px
+                justifyContent = JustifyContent.center
             }
             direction = responsive(StackDirection.row)
-            CarouselContext.Provider {
-                value = reducer
-                child(it.children)
-            }
-
-        }
-
-
-        Tooltip {
-            title = ReactNode("Next")
-            IconButton {
-                sx {
-                    margin=Auto.auto
-                    height = Length.fitContent
-                    //  position = Position.absolute
-                    /*right = 20.px
-                    top = 50.pct
-                    transform = translatey((-50).pct)*/
-                }
-                color = IconButtonColor.secondary
-                onClick = {
-                    dispatch(CarouselAction.IncrementIndex)
-                }
-                ArrowForward()
-            }
-        }
-    }
-
-    Stack {
-        spacing = responsive(2)
-        sx {
-            marginTop = 10.px
-            justifyContent = JustifyContent.center
-        }
-        direction = responsive(StackDirection.row)
-        state.itemList.forEachIndexed { index, str ->
-            div {
-                key = str + index
-                css {
-                    width = 20.px
-                    height = 20.px
-                    background =
-                        if (state.itemIndex == index) theme.palette.primary.main else theme.palette.text.primary
-                    clipPath = circle()
-                    cursor = Cursor.pointer
-                }
-                onClick = {
-                    dispatch(CarouselAction.SetIndex(index))
+            state.itemList.forEachIndexed { index, str ->
+                div {
+                    key = str + index
+                    css {
+                        width = 20.px
+                        height = 20.px
+                        background =
+                            if (state.itemIndex == index) theme.palette.primary.main else theme.palette.text.primary
+                        clipPath = circle()
+                        cursor = Cursor.pointer
+                    }
+                    onClick = {
+                        dispatch(CarouselAction.SetIndex(index))
+                    }
                 }
             }
         }
     }
 
 }
-
+external interface CarouselItemProps:PropsWithChildren,PropsWithSx
 val CarouselItem =
-    FC<PropsWithChildren> {
+    FC<CarouselItemProps> {
         val (_, dispatch) = useContext(CarouselContext)!!
         useEffectOnce {
             dispatch(CarouselAction.Add(it.key.toString()))
@@ -192,6 +205,7 @@ val CarouselItem =
                 minWidth = 100.pct
                 height = 100.pct
                 overflow = Overflow.hidden
+                +it.sx
             }
             div{
                 css {
@@ -204,3 +218,11 @@ val CarouselItem =
             }
         }
     }
+@ExperimentalDangerousRawHTML
+val styledDangerousRawHtml= dangerousRawHtml.styled {
+    margin=Auto.auto
+    width=Auto.auto
+    height=Auto.auto
+    maxWidth=100.pct
+    maxHeight=100.pct
+}

@@ -1,12 +1,10 @@
+import components.AppLink
 import components.NewTabAnchor
 import csstype.*
 import emotion.react.css
 import emotion.styled.styled
-import mui.icons.material.DarkModeOutlined
-import mui.icons.material.GitHub
-import mui.icons.material.LightModeOutlined
-import mui.icons.material.Menu
 import mui.material.*
+import mui.material.List
 import mui.material.styles.TypographyVariant
 import mui.system.Breakpoint
 import mui.system.Theme
@@ -18,7 +16,10 @@ import react.dom.html.ReactHTML.div
 import react.dom.html.ReactHTML.footer
 import react.dom.html.ReactHTML.main
 import react.router.Outlet
+import react.router.dom.Link
 import web.cssom.*
+import mui.icons.material.*
+import mui.icons.material.Menu
 
 val Offset = div.styled {
     +it.asDynamic().theme.unsafeCast<mui.material.styles.Theme>().mixins.toolbar.unsafeCast<Properties>()
@@ -37,31 +38,42 @@ val AppLayout = FC<Props> {
                 isDrawerOpen = !isDrawerOpen
             }
             Stack {
-                direction= responsive(StackDirection.column)
+                direction = responsive(StackDirection.column)
                 sx {
                     width = 250.px
-                    height=100.pct
+                    height = 100.pct
                 }
                 List {
                     ListItem {
-                        +"naotiki.me/"
+                        AppLink {
+                            to="/"
+                            variant = mui.material.styles.TypographyVariant.h4
+                            +"naotiki.me"
+                        }
+
                     }
-                    Pages.values().forEach {
+                    PageRoutes.values().forEach {
                         ListItem {
-                            Link {
-                                href = it.path
-                                ListItemButton {
-                                    ListItemText {
-                                        +it.getName()
+                            ListItemButton {
+                                unsafeProps<PropsWithComponent> {
+                                    component(Link) {
+                                        to = it.path
                                     }
+                                }
+                                ListItemText {
+                                    +it.getName()
+
+                                }
+                                ListItemIcon{
+                                    ArrowForward()
                                 }
                             }
                         }
                     }
                 }
-                div{
+                div {
                     css {
-                        marginTop= Auto.auto
+                        marginTop = Auto.auto
                     }
                 }
                 Button {
@@ -75,7 +87,7 @@ val AppLayout = FC<Props> {
                     +if (colorMode?.isDarkMode == true) "Cool" else "目がぁぁぁぁ"
                 }
                 Button {
-                    component(NewTabAnchor){
+                    component(NewTabAnchor) {
                         href = "https://github.com/naotiki/naotiki.github.io"
                     }
                     GitHub()
@@ -83,22 +95,22 @@ val AppLayout = FC<Props> {
                 }
             }
         }
-        Stack{
-            direction= responsive(StackDirection.row)
-            sx{
-                alignItems= AlignItems.center
-                margin= Margin(10.px,Auto.auto)
+        Stack {
+            direction = responsive(StackDirection.row)
+            sx {
+                alignItems = AlignItems.center
+                margin = Margin(10.px, Auto.auto)
             }
-            div{
-                css{
-                    width=0.px
+            div {
+                css {
+                    width = 0.px
                 }
                 Fab {
                     sx {
-                         position = Position.relative
-                        left=16.px
-                         /*top = 16.px
-                         left = 16.px*/
+                        position = Position.relative
+                        left = 16.px
+                        /*top = 16.px
+                        left = 16.px*/
 
                     }
                     onClick = {
@@ -108,12 +120,10 @@ val AppLayout = FC<Props> {
                 }
             }
 
-            Typography {
+            AppLink {
                 variant = TypographyVariant.h4
-                component = div
                 sx {
-                    textAlign= TextAlign.center
-                    flexGrow = 1.asDynamic()
+                    margin=Auto.auto
                 }
                 +"naotiki.me"
             }
@@ -123,19 +133,18 @@ val AppLayout = FC<Props> {
             //position = AppBarPosition.fixed
             Toolbar {
                 // disableGutters=true
-                Typography {
+                AppLink {
                     variant = TypographyVariant.h5
-                    component = div
-                    sx {
-                        flexGrow = 1.asDynamic()
-                    }
-                    +"Naotiki"
+                    +"naotiki.me"
                 }
+                flexSpacer()
                 Box {
-                    Pages.values().forEach {
+                    PageRoutes.values().forEach {
                         Button {
+                            component(Link) {
+                                to = it.path
+                            }
                             color = ButtonColor.inherit
-                            href = it.path
                             +it.getName()
                         }
                     }
@@ -144,7 +153,7 @@ val AppLayout = FC<Props> {
                         title = ReactNode("naotiki/naotiki.github.io")
                         IconButton {
                             unsafeProps<PropsWithComponent> {
-                                component(NewTabAnchor){
+                                component(NewTabAnchor) {
                                     href = "https://github.com/naotiki/naotiki.github.io"
                                 }
                             }

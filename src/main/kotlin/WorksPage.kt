@@ -3,7 +3,7 @@ import emotion.react.css
 import emotion.styled.styled
 import mui.icons.material.*
 import mui.material.*
-import mui.material.Link
+import react.router.dom.Link
 import mui.material.Size
 import mui.material.styles.Theme
 import mui.material.styles.TypographyVariant
@@ -46,7 +46,7 @@ val WorksPage = FC<Props> {
                     asDynamic().sm = 6
                     asDynamic().xs = 12
                     WorkCard {
-                        workItem=it
+                        workItem = it
                     }
                 }
             }
@@ -54,8 +54,8 @@ val WorksPage = FC<Props> {
     }
 }
 
-val WorkCard= FC<WorkItemProps> {
-    val theme=useTheme<Theme>()
+val WorkCard = FC<WorkItemProps> {
+    val theme = useTheme<Theme>()
     div {
         css {
             height = 100.pct
@@ -89,11 +89,11 @@ val WorkCard= FC<WorkItemProps> {
             CardActionArea {
                 unsafeProps<PropsWithComponent> {
                     component(Link) {
-                        href = "/works/${it.workItem.itemUrlComponent}"
+                        to = "/works/${it.workItem.itemUrlComponent}"
                     }
                 }
                 sx {
-                    flexGrow=1.asDynamic()
+                    flexGrow = 1.asDynamic()
                 }
                 CardHeader {
                     title = ReactNode(it.workItem.name)
@@ -113,7 +113,7 @@ val WorkCard= FC<WorkItemProps> {
                         sx {
                             flexWrap = FlexWrap.wrap
                         }
-                        it.workItem.sortedAttributes.forEach {
+                        it.workItem.sortedAttributes.filter{it !is Attribute.Stack }.forEach {
                             Chip {
                                 size = Size.small
 
@@ -133,7 +133,7 @@ val WorkCard= FC<WorkItemProps> {
                                         icon = it.platform.icon.create()
                                     }
 
-                                    is Attribute.Stack -> TODO()
+                                    is Attribute.Stack -> {}
                                 }
                             }
                         }
@@ -150,18 +150,16 @@ val WorkCard= FC<WorkItemProps> {
                 flexSpacer()
             }
             CardActions {
-                if (it.workItem.hasDetailPage) {
-                    Button {
-                        component(Link) {
-                            href = "/works/${it.workItem.itemUrlComponent}"
-                        }
-                        startIcon = Info.create()
-                        +"詳細"
+                Button {
+                    component(Link) {
+                        to = "/works/${it.workItem.itemUrlComponent}"
                     }
+                    startIcon = Info.create()
+                    +"詳細"
                 }
                 if (it.workItem.artifactUrl != null) {
                     Button {
-                        component(NewTabAnchor){
+                        component(NewTabAnchor) {
                             href = it.workItem.artifactUrl
                         }
                         startIcon = Launch.create()
@@ -171,7 +169,7 @@ val WorkCard= FC<WorkItemProps> {
                 if (it.workItem.repoUrl != null) {
                     IconButton {
                         unsafeProps<PropsWithComponent> {
-                            component(NewTabAnchor){
+                            component(NewTabAnchor) {
                                 href = it.workItem.repoUrl
                             }
                         }

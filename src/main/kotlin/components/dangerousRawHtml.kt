@@ -1,9 +1,11 @@
 package components
 
+import emotion.css.ClassName
 import emotion.react.css
 import js.core.jso
 import mui.system.PropsWithSx
 import react.FC
+import react.PropsWithClassName
 import react.dom.html.ReactHTML.div
 
 @RequiresOptIn
@@ -14,7 +16,7 @@ annotation class ExperimentalDangerousRawHTML
 @ExperimentalDangerousRawHTML
 val dangerousRawHtml = FC<DangerousRawHTMLProps> {
     div {
-        css {
+        className=ClassName(it.className) {
             +it.sx
         }
         dangerouslySetInnerHTML = jso {
@@ -23,6 +25,6 @@ val dangerousRawHtml = FC<DangerousRawHTMLProps> {
     }
 }
 
-external interface DangerousRawHTMLProps : PropsWithSx {
+external interface DangerousRawHTMLProps : PropsWithSx,PropsWithClassName {
     var rawHtml: String
 }

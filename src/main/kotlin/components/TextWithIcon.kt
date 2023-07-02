@@ -20,6 +20,7 @@ val TextWithIcon= FC<TextWithIconProps>{
             display = Display.inlineFlex
             flexWrap = FlexWrap.wrap
             justifyContent = JustifyContent.center
+            alignItems= AlignItems.center
         }
         className = cx(className,it.className)
         child(it.icon)

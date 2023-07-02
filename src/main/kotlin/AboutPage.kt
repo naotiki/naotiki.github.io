@@ -1,4 +1,6 @@
+import components.AppLink
 import emotion.react.css
+import mui.icons.material.ArrowForward
 import mui.icons.material.GitHub
 import mui.icons.material.Twitter
 import mui.material.*
@@ -68,20 +70,33 @@ val AboutPage = FC<Props> {
                 whiteSpace = WhiteSpace.preWrap
             }
             +"""
-                Kotlinが大好きな高専生です。
-                Kotlin/JSやKotlin/Wasmなどで遊んでいます。
-                Compose Multiplatformが大好き。
-                """.trimIndent()
+            なおちき(Naotiki)です。なおてぃき ではないです。ですが Naochiki ではありません。
+            Kotlinが大好きな高専生です。
+            Androidアプリ作ったりKotlin/JSやKotlin/Wasmなどで遊んでいます。
+            Compose (Multiplatform)が大好き。
+            """.trimIndent()
         }
-        Typography {
+        AppLink {
+            to=PageRoutes.Works.path
             variant = TypographyVariant.h4
             +"Works"
+            ArrowForward{
+                sx{
+                    marginLeft=10.px
+                }
+            }
         }
         Container{
             maxWidth=Breakpoint.sm
             Carousel {
+                sx{
+                    alignItems= AlignItems.stretch
+                }
                 works.forEach {
                     CarouselItem {
+                        sx{
+                            height=Auto.auto
+                        }
                         WorkCard {
                             workItem = it
                         }
