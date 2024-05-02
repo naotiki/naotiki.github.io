@@ -131,7 +131,7 @@ kotlin {
                     metaProp("og:url", "https://naotiki.me")
                     metaProp("og:type", "website")
                     metaProp("twitter:card", "summary_large_image")
-                    metaProp("twitter:site", "@naotikiKt")
+                    metaProp("twitter:site", "@Naotiki13")
                 }
                 body {
                     script(src = "/naotiki-website.js") {}

@@ -41,7 +41,7 @@ val AboutPage = FC<Props> {
                 direction = responsive(StackDirection.row)
                 spacing = responsive(2)
                 Fab {
-                    href = "https://twitter.com/naotikiKt"
+                    href = "https://twitter.com/Naotiki13"
                     size = Size.small
                     color = FabColor.primary
                     Twitter()
